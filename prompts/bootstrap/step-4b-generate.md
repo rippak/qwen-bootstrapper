@@ -17,6 +17,17 @@
 - `fresh`: записывать без проверок
 - `validate`: файл есть → валидация → `[OK]`/`[FIX]`/`[REGEN]`; файла нет → `[NEW]`
 
+## Версионирование шаблонов
+
+Все шаблоны (скиллы и пайплайны) содержат версию бутстрапера:
+- **Скиллы**: поле `version` в YAML frontmatter (например `version: "5.4.1"`)
+- **Пайплайны**: HTML-комментарий в первой строке (например `<!-- version: 5.4.1 -->`)
+
+При валидации (`validate` режим):
+- Извлеки версию из локального файла и из шаблона
+- Нет версии или версия < шаблона → `[REGEN] {path}: version outdated`
+- Версия совпадает → продолжить остальные проверки
+
 ---
 
 ## 4.3 Скиллы
@@ -24,21 +35,25 @@
 ### Валидация (режим `validate`)
 
 #### Все скиллы (.claude/skills/*/SKILL.md)
-- Начинается с YAML frontmatter (`---` блок) с полями `name` и `description`
+- Начинается с YAML frontmatter (`---` блок) с полями `name`, `description`, `version`
 - `description` — ОДНА строка (критичное ограничение Claude Code)
+- `version` — совпадает с версией шаблона (см. «Версионирование шаблонов»)
 - Для pipeline и p: `user-invocable: true`
 - Для остальных скиллов: `user-invocable: false`
 → Нет frontmatter → добавить из шаблона → `[FIX] {path}: добавлен frontmatter`
+→ Нет `version` или version < шаблона → перегенерировать из шаблона → `[REGEN] {path}: version outdated`
 
 #### skills/pipeline/SKILL.md (CRITICAL)
 - Файл расположен в `skills/pipeline/` (НЕ `skills/routing/`)
 - Содержит frontmatter с `user-invocable: true`
 - Содержит `name: pipeline` в frontmatter
+- Содержит `version: N` в frontmatter — сравнить с шаблоном (`templates/skills/pipeline.md`)
 - Содержит таблицу Intent → Триггеры
 - Содержит Шаг 4 — Диспатч с ссылкой на `.claude/pipelines/`
 → `skills/routing/` → переместить в `skills/pipeline/` → `[FIX] routing/ → pipeline/`
 → Нет frontmatter → добавить → `[FIX] добавлен frontmatter`
 → Нет таблицы → перегенерировать из шаблона → `[REGEN] pipeline/SKILL.md`
+→ Нет `version` или version < шаблона → перегенерировать из шаблона → `[REGEN] pipeline/SKILL.md: version outdated`
 
 #### skills/p/SKILL.md
 - Содержит frontmatter с `user-invocable: true`
@@ -89,9 +104,11 @@ user-invocable: false
 ### Валидация (режим `validate`)
 
 #### Пайплайны (.claude/pipelines/*.md)
+- Первая строка содержит `<!-- version: X.Y -->` — сравнить с шаблоном
 - Содержит Task() pseudo-syntax для вызова агентов
 - НЕ содержит устаревших текстовых инструкций типа "Прочитай .claude/agents/X.md"
 - Параллельные агенты помечены "Запусти одновременно:"
+→ Нет version или version < шаблона → перегенерировать из шаблона → `[REGEN] {path}: version outdated`
 → Нет Task() → перегенерировать из шаблона → `[REGEN] {path}`
   (при перегенерации сохранять кастомные секции, специфичные для проекта)
 

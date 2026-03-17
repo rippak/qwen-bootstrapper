@@ -2,6 +2,7 @@
 name: "database"
 description: "Паттерны работы с БД, миграции, запросы"
 user-invocable: false
+version: "5.4.1"
 ---
 
 # Skill: Database — {DB_TYPE}

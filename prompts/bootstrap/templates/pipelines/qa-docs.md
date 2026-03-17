@@ -1,3 +1,4 @@
+<!-- version: 5.4.1 -->
 # Pipeline: QA Docs
 
 ## Вход

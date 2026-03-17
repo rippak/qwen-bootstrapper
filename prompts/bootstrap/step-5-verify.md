@@ -34,14 +34,16 @@ done
 
 jq -n \
     --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+    --arg version "5.4.1" \
     --argjson hashes "$HASHES" \
     '{
+        version: $version,
         generated: $date,
         hashes: $hashes
     }' > .claude/.bootstrap-version
 ```
 
-Без поля `version`. Хеши нужны только для определения кастомизированных файлов.
+Поле `version` — версия бутстрапера. Используется при `validate` для сравнения с версиями в шаблонах скиллов/пайплайнов.
 
 ## 5.3 Итоговый отчёт
 
