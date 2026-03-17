@@ -184,6 +184,7 @@ Reviewers  → читают код (git diff), пишут отчёты в output
 
 | Версия | Что нового |
 |--------|------------|
+| v5.4.2 | AskUserQuestion во всём интерактиве, обновление Teams API (natural language вместо TeamCreate/Spawn) |
 | v5.4.1 | Версионирование шаблонов — version в frontmatter скиллов и HTML-комментарий в пайплайнах, авто-REGEN при устаревшей версии |
 | v5.4.0 | Агент-аналитик — Phase 1 ANALYSIS в new-code/full-feature, формализация ТЗ перед архитектурой |
 | v5.3.0 | File-based передача между фазами, секционный CAPTURE, структурированный контекст в роутере, plan mode |

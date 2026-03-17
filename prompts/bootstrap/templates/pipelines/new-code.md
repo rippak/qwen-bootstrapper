@@ -1,4 +1,4 @@
-<!-- version: 5.4.1 -->
+<!-- version: 5.4.2 -->
 # Pipeline: New Code
 
 ## Вход
@@ -17,9 +17,17 @@ Task(.claude/agents/analyst.md, subagent_type: "general-purpose", mode: "plan"):
   Выход: .claude/output/plans/{task-slug}-spec.md
   Верни: краткое ТЗ (scope + затронутые модули + acceptance criteria)
 
-→ Покажи пользователю ТЗ, спроси подтверждение через AskUserQuestion
-→ Если нет: уточни и перегенерируй
-→ Если да: передай ТЗ в Phase 2
+Покажи пользователю краткое ТЗ (scope + модули + acceptance criteria).
+
+AskUserQuestion:
+  question: "ТЗ готово. Подтвердить?"
+  options:
+    - {label: "Подтвердить", description: "Передать ТЗ архитектору"}
+    - {label: "Уточнить", description: "Скорректировать scope или требования"}
+    - {label: "Отменить", description: "Прервать pipeline"}
+
+→ "Уточнить": уточни и перегенерируй ТЗ → повтори AskUserQuestion
+→ "Подтвердить": передай ТЗ в Phase 2
 
 ## Phase 2: ARCHITECTURE
 
@@ -29,7 +37,16 @@ Task(.claude/agents/{lang}-architect.md, subagent_type: "general-purpose", mode:
   ОГРАНИЧЕНИЕ: агент НЕ СОЗДАЁТ и НЕ ИЗМЕНЯЕТ файлы проекта. Только анализ и план.
   Верни: summary (модули, ключевые решения, путь к плану)
 
-Покажи план пользователю. Жди подтверждения через AskUserQuestion.
+Покажи план пользователю (модули, ключевые решения).
+
+AskUserQuestion:
+  question: "Архитектурный план готов. Подтвердить?"
+  options:
+    - {label: "Подтвердить", description: "Приступить к реализации"}
+    - {label: "Уточнить", description: "Скорректировать план"}
+    - {label: "Отменить", description: "Прервать pipeline"}
+
+→ "Уточнить": скорректируй план → повтори AskUserQuestion
 
 ## Phase 3: DATABASE
 
@@ -74,20 +91,21 @@ Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
 
 ### Режим TEAM (если EXECUTION_MODE=team)
 
-TeamCreate("review-{task}", "Code review: logic + security"):
+Создай команду из двух тиммейтов для параллельного ревью:
 
-Spawn("review-{task}", "reviewer-logic", .claude/agents/{lang}-reviewer-logic.md):
+Teammate "reviewer-logic":
+  Промпт: Прочитай .claude/agents/{lang}-reviewer-logic.md и выполни как свою роль.
   Вход: все изменённые файлы (git diff)
   Выход: запиши в `.claude/output/reviews/{task-slug}-logic.md`
-  Верни: summary (verdict, замечания по severity)
+  По завершении: отправь message лиду с summary (verdict, замечания по severity)
 
-Spawn("review-{task}", "reviewer-security", .claude/agents/{lang}-reviewer-security.md):
+Teammate "reviewer-security":
+  Промпт: Прочитай .claude/agents/{lang}-reviewer-security.md и выполни как свою роль.
   Вход: все изменённые файлы (git diff)
   Выход: запиши в `.claude/output/reviews/{task-slug}-security.md`
-  Верни: summary (verdict, замечания по severity)
+  По завершении: отправь message лиду с summary (verdict, замечания по severity)
 
-Жди завершения обоих тиммейтов. Собери результаты через TaskList.
-Shutdown("review-{task}").
+Жди завершения обоих тиммейтов. Собери результаты из их messages.
 
 ### Режим SEQUENTIAL (если EXECUTION_MODE=sequential)
 

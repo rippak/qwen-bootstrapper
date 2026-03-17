@@ -3,7 +3,7 @@ name: pipeline
 description: "Роутер — классифицирует задачу и запускает нужный pipeline"
 user-invocable: true
 argument-hint: "[описание задачи]"
-version: "5.4.1"
+version: "5.4.2"
 ---
 
 > **CRITICAL: Имя директории `skills/pipeline/` и файл frontmatter КОПИРОВАТЬ AS-IS.
@@ -43,13 +43,29 @@ version: "5.4.1"
 
 Приоритет: HOTFIX > FULL-FEATURE > явное имя > keyword > спросить.
 Если FREE — ответь напрямую, без pipeline.
-Если неоднозначно — спросить через AskUserQuestion.
+
+Если неоднозначно:
+AskUserQuestion:
+  question: "Не удалось определить тип задачи. Какой pipeline запустить?"
+  options:
+    - {label: "new-code", description: "Новый модуль, сервис, эндпоинт"}
+    - {label: "fix-code", description: "Баг, ошибка, regression"}
+    - {label: "review", description: "Ревью кода"}
+    - {label: "tests", description: "Написание тестов"}
+    - {label: "full-feature", description: "Полный цикл фичи"}
+    - {label: "hotfix", description: "Срочное исправление"}
+    - {label: "api-docs", description: "API-контракты"}
+    - {label: "qa-docs", description: "QA-чеклисты, Postman"}
+    {CUSTOM_PIPELINE_OPTIONS}
 
 ### Шаг 3 — Подтверждение
-```
-[PIPELINE: {TYPE}] {краткое описание задачи}
-Подтвердить? (или уточнить)
-```
+
+AskUserQuestion:
+  question: "[PIPELINE: {TYPE}] {краткое описание задачи}\nПодтвердить?"
+  options:
+    - {label: "Да", description: "Запустить pipeline"}
+    - {label: "Уточнить", description: "Скорректировать задачу или сменить pipeline"}
+    - {label: "Отменить", description: "Не запускать"}
 
 ### Шаг 3.5 — Анализ задачи (только new-code / full-feature)
 

@@ -34,7 +34,7 @@ done
 
 jq -n \
     --arg date "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-    --arg version "5.4.1" \
+    --arg version "5.4.2" \
     --argjson hashes "$HASHES" \
     '{
         version: $version,

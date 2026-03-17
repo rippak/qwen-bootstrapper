@@ -2,7 +2,7 @@
 name: "architecture"
 description: "Архитектурные паттерны и структура проекта"
 user-invocable: false
-version: "5.4.1"
+version: "5.4.2"
 ---
 
 # Skill: Architecture — {PROJECT_NAME}

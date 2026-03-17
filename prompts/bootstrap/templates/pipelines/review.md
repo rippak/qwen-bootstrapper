@@ -1,4 +1,4 @@
-<!-- version: 5.4.1 -->
+<!-- version: 5.4.2 -->
 # Pipeline: Review
 
 ## Вход
@@ -11,20 +11,21 @@
 
 ### Режим TEAM (если EXECUTION_MODE=team)
 
-TeamCreate("review-{task}", "Code review: logic + security"):
+Создай команду из двух тиммейтов для параллельного ревью:
 
-Spawn("review-{task}", "reviewer-logic", .claude/agents/{lang}-reviewer-logic.md):
+Teammate "reviewer-logic":
+  Промпт: Прочитай .claude/agents/{lang}-reviewer-logic.md и выполни как свою роль.
   Вход: файлы для ревью + `.claude/skills/code-style/SKILL.md` + `.claude/skills/architecture/SKILL.md`
   Выход: запиши в `.claude/output/reviews/{task-slug}-logic.md`
-  Верни: summary (verdict, замечания по severity)
+  По завершении: отправь message лиду с summary (verdict, замечания по severity)
 
-Spawn("review-{task}", "reviewer-security", .claude/agents/{lang}-reviewer-security.md):
+Teammate "reviewer-security":
+  Промпт: Прочитай .claude/agents/{lang}-reviewer-security.md и выполни как свою роль.
   Вход: файлы для ревью
   Выход: запиши в `.claude/output/reviews/{task-slug}-security.md`
-  Верни: summary (verdict, замечания по severity)
+  По завершении: отправь message лиду с summary (verdict, замечания по severity)
 
-Жди завершения обоих тиммейтов. Собери результаты через TaskList.
-Shutdown("review-{task}").
+Жди завершения обоих тиммейтов. Собери результаты из их messages.
 
 ### Режим SEQUENTIAL (если EXECUTION_MODE=sequential)
 

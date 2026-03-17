@@ -19,10 +19,12 @@
 1. Проверь `.claude/settings.json`:
    - Валидный JSON
    - Содержит `permissions.allow`
-2. AskUserQuestion: "Что сделать с settings.json?"
-   - "Merge (Recommended)" — добавить недостающие permissions, сохранить существующие
-   - "Перезаписать" — заменить сгенерированным
-   - "Оставить" — не трогать
+2. AskUserQuestion:
+     question: "Что сделать с settings.json?"
+     options:
+       - {label: "Merge", description: "Добавить недостающие permissions, сохранить существующие (рекомендуется)"}
+       - {label: "Перезаписать", description: "Заменить полностью сгенерированным"}
+       - {label: "Оставить", description: "Не трогать"}
 
 ### Режим `fresh`
 
