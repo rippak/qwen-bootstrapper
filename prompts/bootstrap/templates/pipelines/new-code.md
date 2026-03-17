@@ -7,17 +7,30 @@
 
 {если ADAPTIVE_TEAMS: включи `templates/includes/capability-detect.md`}
 
-## Phase 1: ARCHITECTURE
+## Phase 1: ANALYSIS
+
+{если SKIP_ANALYSIS: пропустить Phase 1, перейти к Phase 2}
+
+Task(.claude/agents/analyst.md, subagent_type: "general-purpose", mode: "plan"):
+  Вход: описание задачи, {SOURCE_DIR}, memory/facts.md, memory/decisions/, database/schema.sql
+  Выход: .claude/output/plans/{task-slug}-spec.md
+  Верни: краткое ТЗ (scope + затронутые модули + acceptance criteria)
+
+→ Покажи пользователю ТЗ, спроси подтверждение через AskUserQuestion
+→ Если нет: уточни и перегенерируй
+→ Если да: передай ТЗ в Phase 2
+
+## Phase 2: ARCHITECTURE
 
 Task(.claude/agents/{lang}-architect.md, subagent_type: "general-purpose", mode: "plan"):
-  Вход: описание задачи + структурированный контекст + `.claude/skills/architecture/SKILL.md`
+  Вход: `.claude/output/plans/{task-slug}-spec.md` + `.claude/skills/architecture/SKILL.md`
   Выход: запиши план в `.claude/output/plans/{task-slug}.md`
   ОГРАНИЧЕНИЕ: агент НЕ СОЗДАЁТ и НЕ ИЗМЕНЯЕТ файлы проекта. Только анализ и план.
   Верни: summary (модули, ключевые решения, путь к плану)
 
 Покажи план пользователю. Жди подтверждения через AskUserQuestion.
 
-## Phase 2: DATABASE
+## Phase 3: DATABASE
 
 Если задача затрагивает БД:
 
@@ -32,7 +45,7 @@ Task(.claude/agents/db-architect.md, subagent_type: "general-purpose"):
 
 Если БД не затронута — `[SKIP]`.
 
-## Phase 3: CODE
+## Phase 4: CODE
 
 Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
   Вход: прочитай `.claude/output/plans/{task-slug}.md` + `.claude/skills/code-style/SKILL.md`
@@ -43,10 +56,10 @@ Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
 {SYNTAX_CHECK_CMD}
 ```
 
-## Phase 4: TESTS
+## Phase 5: TESTS
 
 Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
-  Вход: реализованные файлы (из git diff или summary Phase 3) + `.claude/skills/testing/SKILL.md`
+  Вход: реализованные файлы (из git diff или summary Phase 4) + `.claude/skills/testing/SKILL.md`
   Выход: файлы тестов
   Верни: summary (тесты, покрытие)
 
@@ -56,7 +69,7 @@ Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
 
 Если тесты fail — исправить (максимум 2 итерации).
 
-## Phase 5: REVIEW
+## Phase 6: REVIEW
 
 ### Режим TEAM (если EXECUTION_MODE=team)
 
@@ -90,11 +103,11 @@ Task(.claude/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose
   Верни: summary (verdict, замечания по severity)
 
 ### Обработка результатов (оба режима)
-- **BLOCK** от любого reviewer → исправить и повторить Phase 5
+- **BLOCK** от любого reviewer → исправить и повторить Phase 6
 - **PASS WITH WARNINGS** → исправить WARN, продолжить
 - **PASS** → продолжить
 
-## Phase 5.5: CAPTURE
+## Phase 6.5: CAPTURE
 
 1. Обнови `.claude/memory/facts.md` по секциям:
    - "## Stack" → ЗАМЕНИТЬ секцию целиком (только если стек изменился)
@@ -105,7 +118,7 @@ Task(.claude/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose
 2. Если были архитектурные решения → `.claude/memory/decisions/{date}-{slug}.md`
 3. Обнови `.claude/memory/patterns.md` если выявлены новые паттерны
 
-## Phase 6: FINALIZATION
+## Phase 7: FINALIZATION
 
 ### Итог
 ```
@@ -119,8 +132,9 @@ Review: {verdict}
 
 | Фаза | Ошибка | Действие |
 |------|--------|----------|
-| ARCHITECTURE | План отклонён | Уточнить требования → повторить Phase 1 |
-| DATABASE | Миграция fail | Проверить SQL → повторить Phase 2 |
+| ANALYSIS | ТЗ отклонено | Уточнить требования → повторить Phase 1 |
+| ARCHITECTURE | План отклонён | Уточнить требования → повторить Phase 2 |
+| DATABASE | Миграция fail | Проверить SQL → повторить Phase 3 |
 | CODE | Syntax error | Исправить → повторить проверку |
 | TESTS | Тесты fail (>2 итераций) | Остановить, показать ошибки пользователю |
-| REVIEW | BLOCK | Исправить замечания → повторить Phase 5 |
+| REVIEW | BLOCK | Исправить замечания → повторить Phase 6 |

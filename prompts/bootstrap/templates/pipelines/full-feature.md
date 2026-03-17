@@ -7,7 +7,7 @@
 
 ## Phase 1: NEW CODE
 
-Выполни pipeline `.claude/pipelines/new-code.md` полностью (все 6 фаз + Phase 5.5 CAPTURE).
+Выполни pipeline `.claude/pipelines/new-code.md` полностью (все 7 фаз + Phase 6.5 CAPTURE).
 
 ## Phase 2: API DOCS
 

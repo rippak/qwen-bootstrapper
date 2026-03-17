@@ -89,6 +89,7 @@ mkdir -p .claude/skills/gitlab
   Прочитай шаблон `templates/agents/lang-reviewer-security.md` → подставь переменные → запиши в `.claude/agents/{lang}-reviewer-security.md`
 
 Общие агенты (по условиям):
+  Прочитай шаблон `templates/agents/analyst.md` → подставь переменные ({SOURCE_DIR}, общие пути) → запиши в `.claude/agents/analyst.md`
   Прочитай шаблон `templates/agents/db-architect.md` → подставь переменные → запиши в `.claude/agents/db-architect.md` (если есть БД)
   Прочитай шаблон `templates/agents/devops.md` → подставь переменные → запиши в `.claude/agents/devops.md`
   Прочитай шаблон `templates/agents/frontend-developer.md` → подставь переменные → запиши в `.claude/agents/frontend-developer.md` (если FRONTEND != none)

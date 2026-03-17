@@ -19,6 +19,11 @@ argument-hint: "[описание задачи]"
 1. Прочитай `.claude/memory/facts.md`
 2. Проверь `.claude/memory/decisions/` — релевантные решения
 
+### Шаг 1.5 — Парсинг флагов
+Если `$ARGUMENTS` содержит `--no-analysis` или `--skip-analyst`:
+- Установи `SKIP_ANALYSIS=true`
+- Удали флаг из `$ARGUMENTS` перед классификацией
+
 ### Шаг 2 — Классификация
 Проанализируй аргумент `$ARGUMENTS` и определи тип:
 
@@ -45,21 +50,21 @@ argument-hint: "[описание задачи]"
 Подтвердить? (или уточнить)
 ```
 
-### Шаг 3.5 — Контекст задачи
+### Шаг 3.5 — Анализ задачи (только new-code / full-feature)
 
-Для NEW-CODE / FULL-FEATURE:
+Если пайплайн = NEW-CODE или FULL-FEATURE и `SKIP_ANALYSIS` не установлен:
 
 AskUserQuestion:
-  question: "Scope задачи?"
+  question: "Запустить анализ задачи? Аналитик задаст уточняющие вопросы и сформирует ТЗ."
   options:
-    - {label: "Новый модуль", description: "Новый сервис/контроллер/модуль с нуля"}
-    - {label: "Расширение", description: "Добавить в существующий модуль"}
-    - {label: "API эндпоинт", description: "Новый эндпоинт в существующем модуле"}
+    - {label: "Да", description: "Аналитик изучит код, схему и сформирует ТЗ"}
+    - {label: "Пропустить", description: "Сразу к архитектуре без анализа"}
 
-AskUserQuestion:
-  question: "Затронутые модули?"
-  options: {динамически из facts.md → Key Paths + "Other"}
-  multiSelect: true
+Если "Пропустить" → `SKIP_ANALYSIS=true`
+
+### Шаг 3.6 — Контекст задачи
+
+Для NEW-CODE / FULL-FEATURE — пропустить (аналитик или architect разберутся сами).
 
 Для FIX-CODE / HOTFIX:
 

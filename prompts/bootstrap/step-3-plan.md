@@ -35,6 +35,7 @@
 
 | Агент | Файл | Роль | Условие |
 |-------|------|------|---------|
+| Analyst | `analyst.md` | Технический аналитик, ТЗ для технических агентов | всегда |
 | DB Architect | `db-architect.md` | БД, миграции, индексы | если есть БД |
 | DevOps | `devops.md` | Docker, инфра, диагностика | всегда |
 | Frontend Developer | `frontend-developer.md` | Компоненты, страницы | если FRONTEND != none |
