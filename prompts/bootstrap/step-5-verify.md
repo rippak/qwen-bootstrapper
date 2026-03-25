@@ -11,23 +11,23 @@
 
 ## 5.1 Запуск верификации
 
-Прочитай шаблон `templates/verify-bootstrap.sh` → запиши в `.claude/scripts/verify-bootstrap.sh` (если ещё не создан на шаге 4).
+Прочитай шаблон `templates/verify-bootstrap.sh` → запиши в `.qwen/scripts/verify-bootstrap.sh` (если ещё не создан на шаге 4).
 
 Запусти скрипт верификации одной командой:
 
 ```bash
-bash .claude/scripts/verify-bootstrap.sh
+bash .qwen/scripts/verify-bootstrap.sh
 ```
 
 ## 5.2 Version Tracking
 
-Сгенерируй файл `.claude/.bootstrap-version`:
+Сгенерируй файл `.qwen/.bootstrap-version`:
 
 ```bash
 HASHES="{}"
-for f in .claude/agents/*.md .claude/skills/*/SKILL.md .claude/pipelines/*.md .claude/scripts/hooks/*.sh .claude/scripts/verify-bootstrap.sh; do
+for f in .qwen/agents/*.md .qwen/skills/*/SKILL.md .qwen/pipelines/*.md .qwen/scripts/hooks/*.sh .qwen/scripts/verify-bootstrap.sh; do
     [ -f "$f" ] || continue
-    REL=$(echo "$f" | sed 's|^.claude/||')
+    REL=$(echo "$f" | sed 's|^.qwen/||')
     HASH=$(sha256sum "$f" | cut -d' ' -f1)
     HASHES=$(echo "$HASHES" | jq --arg k "$REL" --arg v "sha256:$HASH" '. + {($k): $v}')
 done
@@ -40,7 +40,7 @@ jq -n \
         version: $version,
         generated: $date,
         hashes: $hashes
-    }' > .claude/.bootstrap-version
+    }' > .qwen/.bootstrap-version
 ```
 
 Поле `version` — версия бутстрапера. Используется при `validate` для сравнения с версиями в шаблонах скиллов/пайплайнов.
@@ -50,7 +50,7 @@ jq -n \
 Покажи:
 - Количество агентов, скиллов, пайплайнов
 - Стек проекта
-- Что было вычленено из CLAUDE.md (если было)
+- Что было вычленено из QWEN.md (если было)
 - Список всех созданных файлов
 - Результат верификации (все [OK] или есть [MISS]/[ERR])
 
@@ -60,7 +60,7 @@ jq -n \
 
 ```
 ╔══════════════════════════════════════════════╗
-║  Claude Code Automation — Bootstrap Complete ║
+║  Qwen Code Automation — Bootstrap Complete ║
 ╠══════════════════════════════════════════════╣
 ║  Project: {PROJECT_NAME}                     ║
 ║  Stack: {LANGS} + {FRONTEND}                  ║

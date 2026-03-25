@@ -1,4 +1,4 @@
-.claude
+.qwen
 .git
 .idea
 .vscode
@@ -7,4 +7,4 @@
 /.env
 /.env.local
 /.env.test
-CLAUDE.md
+QWEN.md

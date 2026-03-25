@@ -1,9 +1,9 @@
 #!/bin/bash
 set -uo pipefail
-ERR_LOG="${CLAUDE_PROJECT_DIR:-.}/.claude/memory/.hook-errors.log"
+ERR_LOG="${QWEN_PROJECT_DIR:-.}/.qwen/memory/.hook-errors.log"
 trap 'echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] ERROR in $(basename "$0"):$LINENO" >> "$ERR_LOG" 2>/dev/null; exit 0' ERR
 
-MEMORY_DIR="$CLAUDE_PROJECT_DIR/.claude/memory"
+MEMORY_DIR="$QWEN_PROJECT_DIR/.qwen/memory"
 DECISIONS_DIR="$MEMORY_DIR/decisions"
 ARCHIVE_DIR="$DECISIONS_DIR/archive"
 SESSIONS_DIR="$MEMORY_DIR/sessions"
@@ -68,8 +68,8 @@ fi
 
 # --- output: cleanup old plans/reviews (>7 days) ---
 for subdir in plans reviews; do
-    if [ -d "$CLAUDE_PROJECT_DIR/.claude/output/$subdir" ]; then
-        find "$CLAUDE_PROJECT_DIR/.claude/output/$subdir" -name "*.md" -mtime +7 -delete 2>/dev/null
+    if [ -d "$QWEN_PROJECT_DIR/.qwen/output/$subdir" ]; then
+        find "$QWEN_PROJECT_DIR/.qwen/output/$subdir" -name "*.md" -mtime +7 -delete 2>/dev/null
     fi
 done
 

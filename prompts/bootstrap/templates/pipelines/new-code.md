@@ -4,7 +4,7 @@
 ## Вход
 - Описание задачи от пользователя
 - Структурированный контекст из роутера: scope, affected_modules
-- `.claude/memory/facts.md`
+- `.qwen/memory/facts.md`
 
 {если ADAPTIVE_TEAMS: включи `templates/includes/capability-detect.md`}
 
@@ -12,9 +12,9 @@
 
 {если SKIP_ANALYSIS: пропустить Phase 1, перейти к Phase 2}
 
-Task(.claude/agents/analyst.md, subagent_type: "general-purpose", mode: "plan"):
+Task(.qwen/agents/analyst.md, subagent_type: "general-purpose", mode: "plan"):
   Вход: описание задачи, {SOURCE_DIR}, memory/facts.md, memory/decisions/, database/schema.sql
-  Выход: .claude/output/plans/{task-slug}-spec.md
+  Выход: .qwen/output/plans/{task-slug}-spec.md
   Верни: краткое ТЗ (scope + затронутые модули + acceptance criteria)
 
 Покажи пользователю краткое ТЗ (scope + модули + acceptance criteria).
@@ -31,9 +31,9 @@ AskUserQuestion:
 
 ## Phase 2: ARCHITECTURE
 
-Task(.claude/agents/{lang}-architect.md, subagent_type: "general-purpose", mode: "plan"):
-  Вход: `.claude/output/plans/{task-slug}-spec.md` + `.claude/skills/architecture/SKILL.md`
-  Выход: запиши план в `.claude/output/plans/{task-slug}.md`
+Task(.qwen/agents/{lang}-architect.md, subagent_type: "general-purpose", mode: "plan"):
+  Вход: `.qwen/output/plans/{task-slug}-spec.md` + `.qwen/skills/architecture/SKILL.md`
+  Выход: запиши план в `.qwen/output/plans/{task-slug}.md`
   ОГРАНИЧЕНИЕ: агент НЕ СОЗДАЁТ и НЕ ИЗМЕНЯЕТ файлы проекта. Только анализ и план.
   Верни: summary (модули, ключевые решения, путь к плану)
 
@@ -52,8 +52,8 @@ AskUserQuestion:
 
 Если задача затрагивает БД:
 
-Task(.claude/agents/db-architect.md, subagent_type: "general-purpose"):
-  Вход: прочитай `.claude/output/plans/{task-slug}.md` + `.claude/skills/database/SKILL.md` + `.claude/database/schema.sql`
+Task(.qwen/agents/db-architect.md, subagent_type: "general-purpose"):
+  Вход: прочитай `.qwen/output/plans/{task-slug}.md` + `.qwen/skills/database/SKILL.md` + `.qwen/database/schema.sql`
   Выход: миграции, обновлённая схема
   Верни: summary (таблицы, миграции)
 
@@ -65,8 +65,8 @@ Task(.claude/agents/db-architect.md, subagent_type: "general-purpose"):
 
 ## Phase 4: CODE
 
-Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
-  Вход: прочитай `.claude/output/plans/{task-slug}.md` + `.claude/skills/code-style/SKILL.md`
+Task(.qwen/agents/{lang}-developer.md, subagent_type: "general-purpose"):
+  Вход: прочитай `.qwen/output/plans/{task-slug}.md` + `.qwen/skills/code-style/SKILL.md`
   Выход: файлы кода
   Верни: summary (созданные файлы, зависимости)
 
@@ -76,8 +76,8 @@ Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
 
 ## Phase 5: TESTS
 
-Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
-  Вход: реализованные файлы (из git diff или summary Phase 4) + `.claude/skills/testing/SKILL.md`
+Task(.qwen/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
+  Вход: реализованные файлы (из git diff или summary Phase 4) + `.qwen/skills/testing/SKILL.md`
   Выход: файлы тестов
   Верни: summary (тесты, покрытие)
 
@@ -94,15 +94,15 @@ Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
 Создай команду из двух тиммейтов для параллельного ревью:
 
 Teammate "reviewer-logic":
-  Промпт: Прочитай .claude/agents/{lang}-reviewer-logic.md и выполни как свою роль.
+  Промпт: Прочитай .qwen/agents/{lang}-reviewer-logic.md и выполни как свою роль.
   Вход: все изменённые файлы (git diff)
-  Выход: запиши в `.claude/output/reviews/{task-slug}-logic.md`
+  Выход: запиши в `.qwen/output/reviews/{task-slug}-logic.md`
   По завершении: отправь message лиду с summary (verdict, замечания по severity)
 
 Teammate "reviewer-security":
-  Промпт: Прочитай .claude/agents/{lang}-reviewer-security.md и выполни как свою роль.
+  Промпт: Прочитай .qwen/agents/{lang}-reviewer-security.md и выполни как свою роль.
   Вход: все изменённые файлы (git diff)
-  Выход: запиши в `.claude/output/reviews/{task-slug}-security.md`
+  Выход: запиши в `.qwen/output/reviews/{task-slug}-security.md`
   По завершении: отправь message лиду с summary (verdict, замечания по severity)
 
 Жди завершения обоих тиммейтов. Собери результаты из их messages.
@@ -111,14 +111,14 @@ Teammate "reviewer-security":
 
 Запусти одновременно:
 
-Task(.claude/agents/{lang}-reviewer-logic.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/{lang}-reviewer-logic.md, subagent_type: "general-purpose"):
   Вход: все изменённые файлы (git diff)
-  Выход: запиши в `.claude/output/reviews/{task-slug}-logic.md`
+  Выход: запиши в `.qwen/output/reviews/{task-slug}-logic.md`
   Верни: summary (verdict, замечания по severity)
 
-Task(.claude/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose"):
   Вход: все изменённые файлы (git diff)
-  Выход: запиши в `.claude/output/reviews/{task-slug}-security.md`
+  Выход: запиши в `.qwen/output/reviews/{task-slug}-security.md`
   Верни: summary (verdict, замечания по severity)
 
 ### Обработка результатов (оба режима)
@@ -128,14 +128,14 @@ Task(.claude/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose
 
 ## Phase 6.5: CAPTURE
 
-1. Обнови `.claude/memory/facts.md` по секциям:
+1. Обнови `.qwen/memory/facts.md` по секциям:
    - "## Stack" → ЗАМЕНИТЬ секцию целиком (только если стек изменился)
    - "## Key Paths" → МЕРЖИТЬ: добавь новые, удали несуществующие пути
    - "## Active Decisions" → ЗАМЕНИТЬ: только ссылки на файлы из decisions/ (НЕ archive)
    - "## Known Issues" → максимум 10 записей, удали разрешённые
    ПРАВИЛО: перед добавлением проверь — НЕ ДУБЛИРУЙ существующие записи
-2. Если были архитектурные решения → `.claude/memory/decisions/{date}-{slug}.md`
-3. Обнови `.claude/memory/patterns.md` если выявлены новые паттерны
+2. Если были архитектурные решения → `.qwen/memory/decisions/{date}-{slug}.md`
+3. Обнови `.qwen/memory/patterns.md` если выявлены новые паттерны
 
 ## Phase 7: FINALIZATION
 

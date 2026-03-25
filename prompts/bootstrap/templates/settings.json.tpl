@@ -23,7 +23,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash $CLAUDE_PROJECT_DIR/.claude/scripts/hooks/track-agent.sh"
+            "command": "bash $QWEN_PROJECT_DIR/.qwen/scripts/hooks/track-agent.sh"
           }
         ]
       }
@@ -33,7 +33,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash $CLAUDE_PROJECT_DIR/.claude/scripts/hooks/maintain-memory.sh"
+            "command": "bash $QWEN_PROJECT_DIR/.qwen/scripts/hooks/maintain-memory.sh"
           }
         ]
       }

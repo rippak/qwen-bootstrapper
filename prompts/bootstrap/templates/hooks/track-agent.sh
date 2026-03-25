@@ -1,9 +1,9 @@
 #!/bin/bash
 set -uo pipefail
-ERR_LOG="${CLAUDE_PROJECT_DIR:-.}/.claude/memory/.hook-errors.log"
+ERR_LOG="${QWEN_PROJECT_DIR:-.}/.qwen/memory/.hook-errors.log"
 trap 'echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] ERROR in $(basename "$0"):$LINENO" >> "$ERR_LOG" 2>/dev/null; exit 0' ERR
 
-LOG_DIR="$CLAUDE_PROJECT_DIR/.claude/memory"
+LOG_DIR="$QWEN_PROJECT_DIR/.qwen/memory"
 LOG_FILE="$LOG_DIR/usage.jsonl"
 mkdir -p "$LOG_DIR"
 
@@ -16,7 +16,7 @@ fi
 
 AGENT_NAME=$(echo "$INPUT" | jq -r '
     .tool_input.prompt // "" |
-    capture("\\.claude/agents/(?<name>[^.]+)") // null |
+    capture("\\.qwen/agents/(?<name>[^.]+)") // null |
     .name // null
 ')
 if [ -z "$AGENT_NAME" ] || [ "$AGENT_NAME" = "null" ]; then
@@ -27,7 +27,7 @@ if [ -z "$AGENT_NAME" ]; then
 fi
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-BRANCH=$(cd "$CLAUDE_PROJECT_DIR" && git branch --show-current 2>/dev/null || echo "unknown")
+BRANCH=$(cd "$QWEN_PROJECT_DIR" && git branch --show-current 2>/dev/null || echo "unknown")
 
 jq -n \
     --arg ts "$TIMESTAMP" \

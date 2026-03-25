@@ -9,8 +9,8 @@ description: "CI/CD, Docker, деплой, инфраструктура"
 Docker, инфраструктура, окружение, диагностика.
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
-- `.claude/memory/decisions/` — архитектурные решения
+- `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
+- `.qwen/memory/decisions/` — архитектурные решения
 - `{COMPOSE_FILE}` — конфигурация контейнеров
 - `{CONFIG_DIR}` — конфиги сервисов
 - `{ENV_FILE}` — переменные окружения

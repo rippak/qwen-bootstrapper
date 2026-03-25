@@ -2,7 +2,7 @@
 
 Определи режим выполнения:
 
-1. Проверь env-переменную `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`:
+1. Проверь env-переменную `QWEN_CODE_EXPERIMENTAL_AGENT_TEAMS`:
    - Если `= 1` → `EXECUTION_MODE=team`
    - Иначе → `EXECUTION_MODE=sequential`
 

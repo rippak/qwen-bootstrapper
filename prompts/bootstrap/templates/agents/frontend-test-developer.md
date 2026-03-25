@@ -9,10 +9,10 @@ description: "Написание тестов для frontend-компонент
 Пишет тесты для frontend-компонентов и сервисов.
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
-- `.claude/memory/decisions/` — архитектурные решения
+- `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
+- `.qwen/memory/decisions/` — архитектурные решения
 - Компонент/сервис для тестирования
-- `.claude/skills/testing/SKILL.md`
+- `.qwen/skills/testing/SKILL.md`
 
 ## Вход (получаешь от пайплайна)
 - task-slug: идентификатор задачи

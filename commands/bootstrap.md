@@ -1,8 +1,12 @@
+---
+description: 'Запуск генерации системы развертывания. ВНИМАНИЕ! Операция потребляет много токенов.'
+---
+
 Прочитай файл `$ARGUMENTS` и выполни ВСЕ шаги из него для текущего проекта.
 
 Если аргумент не указан — ищи промпт:
-1. `.claude/prompts/meta-prompt-bootstrap.md` в текущем проекте
-2. `~/.claude/prompts/meta-prompt-bootstrap.md` (глобальная копия)
+1. `.qwen/prompts/meta-prompt-bootstrap.md` в текущем проекте
+2. `~/.qwen/prompts/meta-prompt-bootstrap.md` (глобальная копия)
 
 Если файл не найден — сообщи пользователю.
 
@@ -10,8 +14,8 @@
 
 ## Определи BOOTSTRAP_MODE
 
-- `.claude/` не существует → `BOOTSTRAP_MODE = "fresh"` → `[MODE] fresh — полная генерация`
-- `.claude/` существует → `BOOTSTRAP_MODE = "validate"` → `[MODE] validate — проверка и починка`
+- `.qwen/` не существует → `BOOTSTRAP_MODE = "fresh"` → `[MODE] fresh — полная генерация`
+- `.qwen/` существует → `BOOTSTRAP_MODE = "validate"` → `[MODE] validate — проверка и починка`
 
 Передай BOOTSTRAP_MODE в контексте выполнения шагов.
 Выполняй шаги строго по порядку (Шаг 1 → 2 → 3 → 4 → 5).

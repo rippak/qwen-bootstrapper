@@ -34,9 +34,9 @@
 
 ### Валидация (режим `validate`)
 
-#### Все скиллы (.claude/skills/*/SKILL.md)
+#### Все скиллы (.qwen/skills/*/SKILL.md)
 - Начинается с YAML frontmatter (`---` блок) с полями `name`, `description`, `version`
-- `description` — ОДНА строка (критичное ограничение Claude Code)
+- `description` — ОДНА строка (критичное ограничение Qwen Code)
 - `version` — совпадает с версией шаблона (см. «Версионирование шаблонов»)
 - Для pipeline и p: `user-invocable: true`
 - Для остальных скиллов: `user-invocable: false`
@@ -49,7 +49,7 @@
 - Содержит `name: pipeline` в frontmatter
 - Содержит `version: N` в frontmatter — сравнить с шаблоном (`templates/skills/pipeline.md`)
 - Содержит таблицу Intent → Триггеры
-- Содержит Шаг 4 — Диспатч с ссылкой на `.claude/pipelines/`
+- Содержит Шаг 4 — Диспатч с ссылкой на `.qwen/pipelines/`
 → `skills/routing/` → переместить в `skills/pipeline/` → `[FIX] routing/ → pipeline/`
 → Нет frontmatter → добавить → `[FIX] добавлен frontmatter`
 → Нет таблицы → перегенерировать из шаблона → `[REGEN] pipeline/SKILL.md`
@@ -64,19 +64,19 @@
 
 ### Генерация
 
-Для каждого скилла прочитай шаблон из `templates/skills/` → подставь переменные → запиши в `.claude/skills/{name}/SKILL.md`:
+Для каждого скилла прочитай шаблон из `templates/skills/` → подставь переменные → запиши в `.qwen/skills/{name}/SKILL.md`:
 
-  `templates/skills/code-style.md` → `.claude/skills/code-style/SKILL.md`
-  `templates/skills/architecture.md` → `.claude/skills/architecture/SKILL.md`
-  `templates/skills/database.md` → `.claude/skills/database/SKILL.md`
-  `templates/skills/testing.md` → `.claude/skills/testing/SKILL.md`
-  `templates/skills/pipeline.md` → `.claude/skills/pipeline/SKILL.md`
-  `templates/skills/p.md` → `.claude/skills/p/SKILL.md`
-  `templates/skills/memory.md` → `.claude/skills/memory/SKILL.md`
+  `templates/skills/code-style.md` → `.qwen/skills/code-style/SKILL.md`
+  `templates/skills/architecture.md` → `.qwen/skills/architecture/SKILL.md`
+  `templates/skills/database.md` → `.qwen/skills/database/SKILL.md`
+  `templates/skills/testing.md` → `.qwen/skills/testing/SKILL.md`
+  `templates/skills/pipeline.md` → `.qwen/skills/pipeline/SKILL.md`
+  `templates/skills/p.md` → `.qwen/skills/p/SKILL.md`
+  `templates/skills/memory.md` → `.qwen/skills/memory/SKILL.md`
 
 ### 4.3.1 Кастомные скиллы
 
-Для каждого скилла из CUSTOM_SKILLS сгенерируй файл `.claude/skills/{name}/SKILL.md` по шаблону:
+Для каждого скилла из CUSTOM_SKILLS сгенерируй файл `.qwen/skills/{name}/SKILL.md` по шаблону:
 
 ```markdown
 ---
@@ -103,7 +103,7 @@ user-invocable: false
 
 ### Валидация (режим `validate`)
 
-#### Пайплайны (.claude/pipelines/*.md)
+#### Пайплайны (.qwen/pipelines/*.md)
 
 **Приоритет 1 — версия (проверяй ПЕРВЫМ для КАЖДОГО пайплайна без исключений):**
 - Первая строка содержит `<!-- version: X.Y.Z -->` — сравнить с версией в шаблоне
@@ -113,7 +113,7 @@ user-invocable: false
 **Приоритет 2 — структура (только если версия совпала):**
 - Task()-пайплайны (new-code, fix-code, review, tests, api-docs, qa-docs): содержат Task() pseudo-syntax
 - Композитные пайплайны (full-feature, hotfix): ссылаются на другие пайплайны через «Выполни pipeline», Task() НЕ требуется
-- НЕ содержит устаревших текстовых инструкций типа "Прочитай .claude/agents/X.md"
+- НЕ содержит устаревших текстовых инструкций типа "Прочитай .qwen/agents/X.md"
 - Параллельные агенты помечены "Запусти одновременно:"
 → Task()-пайплайн без Task() → `[REGEN] {path}`
   (при перегенерации сохранять кастомные секции, специфичные для проекта)
@@ -131,20 +131,20 @@ user-invocable: false
 - Если неоднозначно — используй `PRIMARY_LANG`
 - Для задач, затрагивающих несколько языков — фазы CODE, TESTS, REVIEW повторяются для каждого затронутого языка с соответствующими агентами
 
-Для каждого пайплайна прочитай шаблон из `templates/pipelines/` → подставь переменные → запиши в `.claude/pipelines/{name}.md`:
+Для каждого пайплайна прочитай шаблон из `templates/pipelines/` → подставь переменные → запиши в `.qwen/pipelines/{name}.md`:
 
-  `templates/pipelines/new-code.md` → `.claude/pipelines/new-code.md`
-  `templates/pipelines/fix-code.md` → `.claude/pipelines/fix-code.md`
-  `templates/pipelines/review.md` → `.claude/pipelines/review.md`
-  `templates/pipelines/tests.md` → `.claude/pipelines/tests.md`
-  `templates/pipelines/api-docs.md` → `.claude/pipelines/api-docs.md`
-  `templates/pipelines/qa-docs.md` → `.claude/pipelines/qa-docs.md`
-  `templates/pipelines/full-feature.md` → `.claude/pipelines/full-feature.md`
-  `templates/pipelines/hotfix.md` → `.claude/pipelines/hotfix.md`
+  `templates/pipelines/new-code.md` → `.qwen/pipelines/new-code.md`
+  `templates/pipelines/fix-code.md` → `.qwen/pipelines/fix-code.md`
+  `templates/pipelines/review.md` → `.qwen/pipelines/review.md`
+  `templates/pipelines/tests.md` → `.qwen/pipelines/tests.md`
+  `templates/pipelines/api-docs.md` → `.qwen/pipelines/api-docs.md`
+  `templates/pipelines/qa-docs.md` → `.qwen/pipelines/qa-docs.md`
+  `templates/pipelines/full-feature.md` → `.qwen/pipelines/full-feature.md`
+  `templates/pipelines/hotfix.md` → `.qwen/pipelines/hotfix.md`
 
 ### 4.4.1 Кастомные пайплайны
 
-Для каждого пайплайна из CUSTOM_PIPELINES сгенерируй файл `.claude/pipelines/{name}.md` по шаблону:
+Для каждого пайплайна из CUSTOM_PIPELINES сгенерируй файл `.qwen/pipelines/{name}.md` по шаблону:
 
 ```markdown
 # Pipeline: {Name}
@@ -182,4 +182,4 @@ user-invocable: false
 - Каждая adaptive-фаза содержит ОБА режима (TEAM + SEQUENTIAL)
 - Секции "Режим TEAM" используют Teammate-синтаксис (НЕ устаревший TeamCreate/Spawn/Shutdown)
 - Task() только в секциях "Режим SEQUENTIAL"
-- Phase 0 CAPABILITY DETECT проверяет env `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` (НЕ наличие инструмента TeamCreate)
+- Phase 0 CAPABILITY DETECT проверяет env `QWEN_CODE_EXPERIMENTAL_AGENT_TEAMS` (НЕ наличие инструмента TeamCreate)

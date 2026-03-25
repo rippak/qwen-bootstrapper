@@ -4,26 +4,26 @@
 ## Вход
 - Описание критичной проблемы
 - Структурированный контекст из роутера: type, affected_modules
-- `.claude/memory/facts.md`
+- `.qwen/memory/facts.md`
 
 ## Phase 1: FIX
 
-Выполни pipeline `.claude/pipelines/fix-code.md` полностью (все 5 фаз).
+Выполни pipeline `.qwen/pipelines/fix-code.md` полностью (все 5 фаз).
 
 ## Phase 2: REVIEW
 
-Выполни pipeline `.claude/pipelines/review.md` для всех изменённых файлов.
+Выполни pipeline `.qwen/pipelines/review.md` для всех изменённых файлов.
 
 Если review вернул BLOCK — вернись к Phase 1 для исправления.
 
 ## Phase 3: CAPTURE
 
-1. Обнови `.claude/memory/facts.md` по секциям:
+1. Обнови `.qwen/memory/facts.md` по секциям:
    - "## Key Paths" → МЕРЖИТЬ: добавь новые, удали несуществующие пути
    - "## Known Issues" → максимум 10 записей, удали разрешённые
    ПРАВИЛО: перед добавлением проверь — НЕ ДУБЛИРУЙ существующие записи
-2. Добавь в `.claude/memory/issues.md`
-3. Обнови `.claude/memory/patterns.md` если выявлен антипаттерн
+2. Добавь в `.qwen/memory/issues.md`
+3. Обнови `.qwen/memory/patterns.md` если выявлен антипаттерн
 
 ## Phase 4: FINALIZATION
 

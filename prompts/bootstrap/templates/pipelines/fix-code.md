@@ -4,16 +4,16 @@
 ## Вход
 - Описание бага / ошибки
 - Структурированный контекст из роутера: type, affected_modules
-- `.claude/memory/facts.md`
+- `.qwen/memory/facts.md`
 
 ## Phase 1: DIAGNOSIS
 
-1. Прочитай `.claude/memory/facts.md` → секции: Stack, Key Paths
-2. Прочитай `.claude/memory/issues.md`
+1. Прочитай `.qwen/memory/facts.md` → секции: Stack, Key Paths
+2. Прочитай `.qwen/memory/issues.md`
 3. Локализуй проблему: файл, строка, причина
 4. Определи root cause
-5. Проверь `.claude/memory/decisions/` на релевантные ограничения
-6. Запиши диагностику в `.claude/output/plans/{task-slug}.md`
+5. Проверь `.qwen/memory/decisions/` на релевантные ограничения
+6. Запиши диагностику в `.qwen/output/plans/{task-slug}.md`
 
 ### Вывод диагностики
 ```
@@ -34,8 +34,8 @@ AskUserQuestion:
 
 ## Phase 2: FIX
 
-Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
-  Вход: прочитай `.claude/output/plans/{task-slug}.md` + `.claude/skills/code-style/SKILL.md`
+Task(.qwen/agents/{lang}-developer.md, subagent_type: "general-purpose"):
+  Вход: прочитай `.qwen/output/plans/{task-slug}.md` + `.qwen/skills/code-style/SKILL.md`
   Выход: исправленные файлы
   Верни: summary (изменённые файлы, что исправлено)
 
@@ -45,7 +45,7 @@ Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
 
 ## Phase 3: TESTS
 
-Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
   Вход: исправленные файлы (из git diff или summary Phase 2) + описание бага
   Выход: regression test, подтверждающий исправление
   Верни: summary (тесты, результат)
@@ -58,9 +58,9 @@ Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
 
 ## Phase 4: REVIEW
 
-Task(.claude/agents/{lang}-reviewer-logic.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/{lang}-reviewer-logic.md, subagent_type: "general-purpose"):
   Вход: все изменённые файлы (git diff)
-  Выход: запиши в `.claude/output/reviews/{task-slug}-logic.md`
+  Выход: запиши в `.qwen/output/reviews/{task-slug}-logic.md`
   Верни: summary (verdict, замечания по severity)
 
 ### Обработка результатов
@@ -70,12 +70,12 @@ Task(.claude/agents/{lang}-reviewer-logic.md, subagent_type: "general-purpose"):
 
 ## Phase 5: CAPTURE
 
-1. Обнови `.claude/memory/facts.md` по секциям:
+1. Обнови `.qwen/memory/facts.md` по секциям:
    - "## Key Paths" → МЕРЖИТЬ: добавь новые, удали несуществующие пути
    - "## Known Issues" → максимум 10 записей, удали разрешённые
    ПРАВИЛО: перед добавлением проверь — НЕ ДУБЛИРУЙ существующие записи
-2. Добавь в `.claude/memory/issues.md` описание бага и решения
-3. Обнови `.claude/memory/patterns.md` если выявлен антипаттерн
+2. Добавь в `.qwen/memory/issues.md` описание бага и решения
+3. Обнови `.qwen/memory/patterns.md` если выявлен антипаттерн
 
 ### Итог
 ```

@@ -1,49 +1,49 @@
 #!/bin/bash
 
-PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+PROJECT_DIR="${QWEN_PROJECT_DIR:-.}"
 EXIT_CODE=0
 
-echo "=== Checking .claude/ structure ==="
+echo "=== Checking .qwen/ structure ==="
 for dir in agents skills pipelines scripts/hooks memory memory/sessions memory/decisions memory/decisions/archive output output/contracts output/qa input database; do
-    if [ -d "$PROJECT_DIR/.claude/$dir" ]; then
-        echo "[OK] .claude/$dir/"
+    if [ -d "$PROJECT_DIR/.qwen/$dir" ]; then
+        echo "[OK] .qwen/$dir/"
     else
-        echo "[MISS] .claude/$dir/"
+        echo "[MISS] .qwen/$dir/"
         EXIT_CODE=1
     fi
 done
 
 echo ""
 echo "=== Checking agents ==="
-for f in "$PROJECT_DIR"/.claude/agents/*.md; do
+for f in "$PROJECT_DIR"/.qwen/agents/*.md; do
     [ -f "$f" ] && echo "[OK] $(basename "$f")"
 done
 
 echo ""
 echo "=== Checking skills ==="
-for f in "$PROJECT_DIR"/.claude/skills/*/SKILL.md; do
+for f in "$PROJECT_DIR"/.qwen/skills/*/SKILL.md; do
     [ -f "$f" ] && echo "[OK] $f"
 done
 
 echo ""
 echo "=== Pipeline Skill ==="
-[ -d "$PROJECT_DIR/.claude/skills/pipeline" ] && echo "[OK] skills/pipeline/" || { echo "[ERR] skills/pipeline/ NOT FOUND"; EXIT_CODE=1; }
-[ -d "$PROJECT_DIR/.claude/skills/routing" ] && echo "[ERR] skills/routing/ — устаревшее имя, переименуй в pipeline/"
-head -5 "$PROJECT_DIR/.claude/skills/pipeline/SKILL.md" 2>/dev/null | grep -q "user-invocable: true" && echo "[OK] frontmatter" || { echo "[ERR] Missing user-invocable: true in pipeline/SKILL.md"; EXIT_CODE=1; }
+[ -d "$PROJECT_DIR/.qwen/skills/pipeline" ] && echo "[OK] skills/pipeline/" || { echo "[ERR] skills/pipeline/ NOT FOUND"; EXIT_CODE=1; }
+[ -d "$PROJECT_DIR/.qwen/skills/routing" ] && echo "[ERR] skills/routing/ — устаревшее имя, переименуй в pipeline/"
+head -5 "$PROJECT_DIR/.qwen/skills/pipeline/SKILL.md" 2>/dev/null | grep -q "user-invocable: true" && echo "[OK] frontmatter" || { echo "[ERR] Missing user-invocable: true in pipeline/SKILL.md"; EXIT_CODE=1; }
 
-[ -d "$PROJECT_DIR/.claude/skills/p" ] && echo "[OK] skills/p/" || echo "[WARN] skills/p/ not found"
+[ -d "$PROJECT_DIR/.qwen/skills/p" ] && echo "[OK] skills/p/" || echo "[WARN] skills/p/ not found"
 
-grep -q "/pipeline" "$PROJECT_DIR/CLAUDE.md" 2>/dev/null && echo "[OK] /pipeline reference in CLAUDE.md" || { echo "[ERR] CLAUDE.md missing /pipeline reference"; EXIT_CODE=1; }
+grep -q "/pipeline" "$PROJECT_DIR/QWEN.md" 2>/dev/null && echo "[OK] /pipeline reference in QWEN.md" || { echo "[ERR] QWEN.md missing /pipeline reference"; EXIT_CODE=1; }
 
 echo ""
 echo "=== Checking pipelines ==="
-for f in "$PROJECT_DIR"/.claude/pipelines/*.md; do
+for f in "$PROJECT_DIR"/.qwen/pipelines/*.md; do
     [ -f "$f" ] && echo "[OK] $(basename "$f")"
 done
 
 echo ""
 echo "=== Checking hooks ==="
-for f in "$PROJECT_DIR"/.claude/scripts/hooks/*.sh; do
+for f in "$PROJECT_DIR"/.qwen/scripts/hooks/*.sh; do
     if [ ! -f "$f" ]; then continue; fi
     if [ -x "$f" ]; then
         echo "[OK] $(basename "$f") (executable)"
@@ -57,7 +57,7 @@ done
 
 echo ""
 echo "=== Checking settings ==="
-for f in "$PROJECT_DIR"/.claude/settings.json; do
+for f in "$PROJECT_DIR"/.qwen/settings.json; do
     if [ -f "$f" ]; then
         if jq empty "$f" 2>/dev/null; then
             echo "[OK] $(basename "$f") (valid JSON)"
@@ -71,37 +71,37 @@ for f in "$PROJECT_DIR"/.claude/settings.json; do
 done
 
 echo ""
-echo "=== Checking CLAUDE.md ==="
-if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
-    echo "[OK] CLAUDE.md exists"
+echo "=== Checking QWEN.md ==="
+if [ -f "$PROJECT_DIR/QWEN.md" ]; then
+    echo "[OK] QWEN.md exists"
     for section in "## Agents" "## Skills" "## Pipelines" "## Commands" "## Architecture"; do
-        if grep -q "$section" "$PROJECT_DIR/CLAUDE.md"; then
+        if grep -q "$section" "$PROJECT_DIR/QWEN.md"; then
             echo "  [OK] $section"
         else
             echo "  [WARN] Missing: $section"
         fi
     done
 else
-    echo "[ERR] CLAUDE.md not found"
+    echo "[ERR] QWEN.md not found"
     EXIT_CODE=1
 fi
 
 echo ""
 echo "=== Checking memory ==="
-for f in "$PROJECT_DIR"/.claude/memory/facts.md "$PROJECT_DIR"/.claude/memory/patterns.md "$PROJECT_DIR"/.claude/memory/issues.md "$PROJECT_DIR"/.claude/skills/memory/SKILL.md; do
+for f in "$PROJECT_DIR"/.qwen/memory/facts.md "$PROJECT_DIR"/.qwen/memory/patterns.md "$PROJECT_DIR"/.qwen/memory/issues.md "$PROJECT_DIR"/.qwen/skills/memory/SKILL.md; do
     if [ -f "$f" ]; then
         echo "[OK] $(basename "$f")"
     else
         echo "[MISS] $(basename "$f")"
     fi
 done
-[ -d "$PROJECT_DIR/.claude/memory/decisions" ] && echo "[OK] memory/decisions/" || echo "[MISS] memory/decisions/"
+[ -d "$PROJECT_DIR/.qwen/memory/decisions" ] && echo "[OK] memory/decisions/" || echo "[MISS] memory/decisions/"
 
 echo ""
 echo "=== Summary ==="
-echo "Agents: $(ls -1 "$PROJECT_DIR"/.claude/agents/*.md 2>/dev/null | wc -l)"
-echo "Skills: $(ls -1d "$PROJECT_DIR"/.claude/skills/*/SKILL.md 2>/dev/null | wc -l)"
-echo "Pipelines: $(ls -1 "$PROJECT_DIR"/.claude/pipelines/*.md 2>/dev/null | wc -l)"
-echo "Hooks: $(ls -1 "$PROJECT_DIR"/.claude/scripts/hooks/*.sh 2>/dev/null | wc -l)"
+echo "Agents: $(ls -1 "$PROJECT_DIR"/.qwen/agents/*.md 2>/dev/null | wc -l)"
+echo "Skills: $(ls -1d "$PROJECT_DIR"/.qwen/skills/*/SKILL.md 2>/dev/null | wc -l)"
+echo "Pipelines: $(ls -1 "$PROJECT_DIR"/.qwen/pipelines/*.md 2>/dev/null | wc -l)"
+echo "Hooks: $(ls -1 "$PROJECT_DIR"/.qwen/scripts/hooks/*.sh 2>/dev/null | wc -l)"
 
 exit $EXIT_CODE

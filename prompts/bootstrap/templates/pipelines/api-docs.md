@@ -3,11 +3,11 @@
 
 ## Вход
 - Модуль / эндпоинты для документирования
-- `.claude/memory/facts.md`
+- `.qwen/memory/facts.md`
 
 ## Phase 1: SCAN
 
-1. Прочитай `.claude/memory/facts.md`
+1. Прочитай `.qwen/memory/facts.md`
 2. Найди все эндпоинты целевого модуля (routes, controllers, handlers)
 3. Определи request/response структуры (DTOs, schemas, models)
 4. Собери middleware, guards, валидацию
@@ -21,7 +21,7 @@
 
 ## Phase 2: GENERATE
 
-Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/{lang}-developer.md, subagent_type: "general-purpose"):
   Вход: результаты сканирования + исходный код эндпоинтов
   Выход: контракт API в markdown-формате
 
@@ -36,12 +36,12 @@ Task(.claude/agents/{lang}-developer.md, subagent_type: "general-purpose"):
 
 ## Phase 3: SAVE
 
-Сохрани в `.claude/output/contracts/{module}.md`
+Сохрани в `.qwen/output/contracts/{module}.md`
 
 ### Итог
 ```
 [API-DOCS COMPLETE]
 Модуль: {name}
 Эндпоинтов: {N}
-Файл: .claude/output/contracts/{module}.md
+Файл: .qwen/output/contracts/{module}.md
 ```

@@ -16,7 +16,7 @@
 
 ### Режим `validate`
 
-1. Проверь `.claude/settings.json`:
+1. Проверь `.qwen/settings.json`:
    - Валидный JSON
    - Содержит `permissions.allow`
 2. AskUserQuestion:
@@ -28,7 +28,7 @@
 
 ### Режим `fresh`
 
-Прочитай шаблон `templates/settings.json.tpl` → подставь переменные → запиши в `.claude/settings.json`.
+Прочитай шаблон `templates/settings.json.tpl` → подставь переменные → запиши в `.qwen/settings.json`.
 
 Адаптируй `{CONTAINER_CMD}` под стек:
 - Docker: `docker compose`, `docker exec`, `docker ps`, `docker network`
@@ -39,7 +39,7 @@
 ```json
 {
   "type": "command",
-  "command": "bash $CLAUDE_PROJECT_DIR/.claude/scripts/hooks/update-schema.sh"
+  "command": "bash $QWEN_PROJECT_DIR/.qwen/scripts/hooks/update-schema.sh"
 }
 ```
 

@@ -9,11 +9,11 @@ description: "Написание frontend-кода (компоненты, сти
 Пишет frontend-код: компоненты, страницы, сервисы, стейт.
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
-- `.claude/memory/decisions/` — архитектурные решения
-- `.claude/input/structure.json` — структура фронта
-- `.claude/skills/code-style/SKILL.md` — стиль кода
-- `.claude/skills/architecture/SKILL.md` — архитектура
+- `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
+- `.qwen/memory/decisions/` — архитектурные решения
+- `.qwen/input/structure.json` — структура фронта
+- `.qwen/skills/code-style/SKILL.md` — стиль кода
+- `.qwen/skills/architecture/SKILL.md` — архитектура
 
 ## Вход (получаешь от пайплайна)
 - task-slug: идентификатор задачи

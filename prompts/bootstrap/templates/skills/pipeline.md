@@ -17,8 +17,8 @@ version: "5.4.2"
 ## Фаза 0: Роутинг
 
 ### Шаг 1 — Контекст
-1. Прочитай `.claude/memory/facts.md`
-2. Проверь `.claude/memory/decisions/` — релевантные решения
+1. Прочитай `.qwen/memory/facts.md`
+2. Проверь `.qwen/memory/decisions/` — релевантные решения
 
 ### Шаг 1.5 — Парсинг флагов
 Если `$ARGUMENTS` содержит `--no-analysis` или `--skip-analyst`:
@@ -115,7 +115,7 @@ AskUserQuestion:
 Для REVIEW / API-DOCS / QA-DOCS — без дополнительных вопросов.
 
 ### Шаг 4 — Диспатч
-Прочитай `.claude/pipelines/{type}.md` и выполни ВСЕ фазы.
+Прочитай `.qwen/pipelines/{type}.md` и выполни ВСЕ фазы.
 
 {если ADAPTIVE_TEAMS:}
 > **Adaptive Teams:** Пайплайны new-code, review, full-feature автоматически определяют

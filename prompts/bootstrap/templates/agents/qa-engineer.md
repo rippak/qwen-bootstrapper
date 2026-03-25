@@ -9,9 +9,9 @@ description: "QA-чеклисты, верификация, тест-планы"
 Генерация тест-кейсов, чеклистов и Postman-коллекций.
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
-- `.claude/memory/decisions/` — архитектурные решения
-- `.claude/output/contracts/{module}.md` — API-контракты
+- `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
+- `.qwen/memory/decisions/` — архитектурные решения
+- `.qwen/output/contracts/{module}.md` — API-контракты
 - Routes модуля
 - Бизнес-требования (передаются в prompt)
 
@@ -24,7 +24,7 @@ description: "QA-чеклисты, верификация, тест-планы"
 
 ### 1. Чеклист тестирования
 
-Файл: `.claude/output/qa/{module}-checklist.md`
+Файл: `.qwen/output/qa/{module}-checklist.md`
 
 Для каждого endpoint минимум 5 тест-кейсов:
 | # | Тест-кейс | Тип | Приоритет | Ожидаемый результат |
@@ -33,12 +33,12 @@ description: "QA-чеклисты, верификация, тест-планы"
 
 ### 2. Postman-коллекция
 
-Файл: `.claude/output/qa/{module}-postman.json`
+Файл: `.qwen/output/qa/{module}-postman.json`
 
 Postman Collection v2.1 с переменными base_url и token.
 
 ## Вывод
-1. Запиши чеклист и Postman-коллекцию в `.claude/output/qa/`
+1. Запиши чеклист и Postman-коллекцию в `.qwen/output/qa/`
 2. Верни ТОЛЬКО краткое summary (5-10 строк):
    - Количество тест-кейсов
    - Покрытие эндпоинтов

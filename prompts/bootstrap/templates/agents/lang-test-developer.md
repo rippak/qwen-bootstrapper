@@ -9,11 +9,11 @@ description: "Написание тестов для {LANG}-кода"
 Пишет unit-тесты.
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
-- `.claude/memory/decisions/` — архитектурные решения
+- `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
+- `.qwen/memory/decisions/` — архитектурные решения
 - Класс для тестирования + его интерфейс
-- `.claude/skills/testing/SKILL.md` — паттерны тестирования
-- `.claude/skills/code-style/SKILL.md` — стиль кода
+- `.qwen/skills/testing/SKILL.md` — паттерны тестирования
+- `.qwen/skills/code-style/SKILL.md` — стиль кода
 
 ## Вход (получаешь от пайплайна)
 - task-slug: идентификатор задачи

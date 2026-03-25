@@ -3,18 +3,18 @@
 
 ## Вход
 - Модуль / фича для QA-документации
-- `.claude/memory/facts.md`
+- `.qwen/memory/facts.md`
 
 ## Phase 1: INPUT
 
-1. Прочитай `.claude/memory/facts.md`
-2. Найди контракт API: `.claude/output/contracts/{module}.md`
+1. Прочитай `.qwen/memory/facts.md`
+2. Найди контракт API: `.qwen/output/contracts/{module}.md`
 3. Изучи бизнес-логику модуля (сервисы, валидация, edge cases)
 4. Если контракта нет — сначала запусти pipeline API Docs
 
 ## Phase 2: CHECKLIST
 
-Task(.claude/agents/qa-engineer.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/qa-engineer.md, subagent_type: "general-purpose"):
   Вход: контракт API + исходный код модуля
   Выход: чеклист тестирования
 
@@ -27,7 +27,7 @@ Task(.claude/agents/qa-engineer.md, subagent_type: "general-purpose"):
 
 ## Phase 3: POSTMAN
 
-Task(.claude/agents/qa-engineer.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/qa-engineer.md, subagent_type: "general-purpose"):
   Вход: контракт API + чеклист
   Выход: Postman-коллекция (JSON)
 
@@ -39,8 +39,8 @@ Task(.claude/agents/qa-engineer.md, subagent_type: "general-purpose"):
 
 ## Phase 4: SAVE
 
-1. Сохрани чеклист в `.claude/output/qa/{module}-checklist.md`
-2. Сохрани коллекцию в `.claude/output/qa/{module}-postman.json`
+1. Сохрани чеклист в `.qwen/output/qa/{module}-checklist.md`
+2. Сохрани коллекцию в `.qwen/output/qa/{module}-postman.json`
 
 ### Итог
 ```
@@ -48,6 +48,6 @@ Task(.claude/agents/qa-engineer.md, subagent_type: "general-purpose"):
 Модуль: {name}
 Сценариев: {N}
 Файлы:
-  - .claude/output/qa/{module}-checklist.md
-  - .claude/output/qa/{module}-postman.json
+  - .qwen/output/qa/{module}-checklist.md
+  - .qwen/output/qa/{module}-postman.json
 ```

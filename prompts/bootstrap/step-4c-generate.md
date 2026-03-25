@@ -34,21 +34,21 @@
 
 ### Генерация
 
-Для каждого хука прочитай шаблон из `templates/hooks/` → запиши в `.claude/scripts/hooks/{name}.sh`:
+Для каждого хука прочитай шаблон из `templates/hooks/` → запиши в `.qwen/scripts/hooks/{name}.sh`:
 
-  `templates/hooks/track-agent.sh` → `.claude/scripts/hooks/track-agent.sh`
-  `templates/hooks/maintain-memory.sh` → `.claude/scripts/hooks/maintain-memory.sh`
+  `templates/hooks/track-agent.sh` → `.qwen/scripts/hooks/track-agent.sh`
+  `templates/hooks/maintain-memory.sh` → `.qwen/scripts/hooks/maintain-memory.sh`
 
 Условно (только если в проекте есть DB — `docker-compose.yml` с postgres/mysql/mariadb):
-  `templates/hooks/update-schema.sh` → `.claude/scripts/hooks/update-schema.sh`
+  `templates/hooks/update-schema.sh` → `.qwen/scripts/hooks/update-schema.sh`
 
 Скрипт верификации:
-  `templates/verify-bootstrap.sh` → `.claude/scripts/verify-bootstrap.sh`
+  `templates/verify-bootstrap.sh` → `.qwen/scripts/verify-bootstrap.sh`
 
 Сделай скрипты исполняемыми:
 ```bash
-chmod +x .claude/scripts/hooks/*.sh
-chmod +x .claude/scripts/verify-bootstrap.sh
+chmod +x .qwen/scripts/hooks/*.sh
+chmod +x .qwen/scripts/verify-bootstrap.sh
 ```
 
 ---
@@ -168,7 +168,7 @@ chmod +x .claude/scripts/verify-bootstrap.sh
 
 Генерируй ТОЛЬКО если `GITLAB_MCP=true`.
 
-### 4.9.1 `.mcp.json` (корень проекта)
+### 4.9.1 `mcpServers раздел в settings.json` (папка .qwen)
 
 ```json
 {
@@ -190,7 +190,9 @@ chmod +x .claude/scripts/verify-bootstrap.sh
 }
 ```
 
-**Важно:** добавь `.mcp.json` в `.gitignore` проекта (содержит токен).
+Если в файле `settings.json` есть другие настройки, то интегрировать настройки `gitlab` в него
+
+**Важно:** добавь `settings.json` в `.gitignore` проекта (содержит токен).
 
 ### 4.9.2 Агент: `agents/gitlab-manager.md`
 
@@ -201,9 +203,9 @@ chmod +x .claude/scripts/verify-bootstrap.sh
 Управление GitLab через MCP: issues, merge requests, pipelines, wiki, releases.
 
 ## Контекст
-- `.claude/memory/facts.md` — текущие факты проекта (ЧИТАЙ ПЕРВЫМ)
-- `.claude/skills/gitlab/SKILL.md` — маппинг операций → MCP tools
-- `.mcp.json` — конфигурация MCP-сервера
+- `.qwen/memory/facts.md` — текущие факты проекта (ЧИТАЙ ПЕРВЫМ)
+- `.qwen/skills/gitlab/SKILL.md` — маппинг операций → MCP tools
+- `mcpServers` — раздел с настройками MCP-серверо в файле `settings.json`
 
 ## Распознавание операций
 
@@ -229,7 +231,7 @@ chmod +x .claude/scripts/verify-bootstrap.sh
 
 | Код | Причина | Действие |
 |-----|---------|----------|
-| 401 | Невалидный токен | Проверить GITLAB_PERSONAL_ACCESS_TOKEN в .mcp.json |
+| 401 | Невалидный токен | Проверить GITLAB_PERSONAL_ACCESS_TOKEN в разделе mcpServers в файле settings.json |
 | 403 | Недостаточно прав | Проверить permissions пользователя |
 | 404 | Неверный projectId/IID | Проверить параметры |
 | 409 | Конфликт | MR уже существует или branch conflict |
@@ -340,7 +342,7 @@ chmod +x .claude/scripts/verify-bootstrap.sh
 | gitlab, MR, merge request, issue, задача #N | `gitlab.md` |
 ```
 
-**CLAUDE.md шаблон** — добавить в таблицы Agents, Skills, Pipelines:
+**QWEN.md шаблон** — добавить в таблицы Agents, Skills, Pipelines:
 ```
 | GitLab Manager | `gitlab-manager.md` | Управление GitLab: issues, MR, pipelines |
 | GitLab | `gitlab/` | MCP-интеграция с GitLab |

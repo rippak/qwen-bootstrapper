@@ -1,10 +1,10 @@
 #!/bin/bash
 set -uo pipefail
-ERR_LOG="${CLAUDE_PROJECT_DIR:-.}/.claude/memory/.hook-errors.log"
+ERR_LOG="${QWEN_PROJECT_DIR:-.}/.qwen/memory/.hook-errors.log"
 trap 'echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] ERROR in $(basename "$0"):$LINENO" >> "$ERR_LOG" 2>/dev/null; exit 0' ERR
 
-PROJECT_DIR="$CLAUDE_PROJECT_DIR"
-DB_DIR="$PROJECT_DIR/.claude/database"
+PROJECT_DIR="$QWEN_PROJECT_DIR"
+DB_DIR="$PROJECT_DIR/.qwen/database"
 
 COMPOSE_FILE=""
 for f in "$PROJECT_DIR/docker-compose.yml" "$PROJECT_DIR/docker-compose.yaml" "$PROJECT_DIR/docker/docker-compose.yml"; do

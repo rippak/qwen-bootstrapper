@@ -195,7 +195,7 @@
 ### 3.4.1 GitLab MCP
 
 **Шаг 1.** Используй AskUserQuestion:
-- question: "Настроить интеграцию с GitLab через MCP? Позволяет управлять issues, MR, pipelines, wiki прямо из Claude Code"
+- question: "Настроить интеграцию с GitLab через MCP? Позволяет управлять issues, MR, pipelines, wiki прямо из QWEN Code"
 - header: "GitLab MCP"
 - options:
   - {label: "Да", description: "Настроить GitLab MCP — потребуется URL, username и токен"}
@@ -230,7 +230,7 @@
 - question: "GitLab Personal Access Token? Создай в GitLab → Settings → Access Tokens (scopes: api, read_user)"
 - header: "Token"
 - options:
-  - {label: "Введу позже", description: "Создать .mcp.json с плейсхолдером YOUR_TOKEN_HERE"}
+  - {label: "Введу позже", description: "Создать раздел mcp в settings.json с плейсхолдером YOUR_TOKEN_HERE"}
   - {label: "Ввести сейчас", description: "Введи токен через Other (glpat-...)"}
 - multiSelect: false
 

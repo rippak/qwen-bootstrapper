@@ -9,12 +9,12 @@ description: "Проектирование схемы БД, миграции, о
 Дизайн БД, миграции, оптимизация запросов.
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
-- `.claude/memory/decisions/` — архитектурные решения
-- `.claude/database/schema.sql` — текущая схема
-- `.claude/database/migrations.txt` — список миграций
+- `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
+- `.qwen/memory/decisions/` — архитектурные решения
+- `.qwen/database/schema.sql` — текущая схема
+- `.qwen/database/migrations.txt` — список миграций
 - {MIGRATIONS_DIR} — файлы миграций
-- `.claude/skills/database/SKILL.md` — паттерны БД
+- `.qwen/skills/database/SKILL.md` — паттерны БД
 
 ## Вход (получаешь от пайплайна)
 - task-slug: идентификатор задачи

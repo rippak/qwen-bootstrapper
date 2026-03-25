@@ -9,10 +9,10 @@ description: "Ревью безопасности {LANG}-кода"
 Ревью безопасности кода. READ-ONLY — не изменяет код.
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
-- `.claude/memory/decisions/` — архитектурные решения
+- `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
+- `.qwen/memory/decisions/` — архитектурные решения
 - Файлы для ревью (передаются в prompt или diff)
-- `.claude/skills/code-style/SKILL.md`
+- `.qwen/skills/code-style/SKILL.md`
 
 ## Вход (получаешь от пайплайна)
 - task-slug: идентификатор задачи
@@ -52,7 +52,7 @@ description: "Ревью безопасности {LANG}-кода"
 - **LOW** — минимальный риск
 
 ## Вывод
-1. Запиши полный отчёт в `.claude/output/reviews/{task-slug}-security.md`
+1. Запиши полный отчёт в `.qwen/output/reviews/{task-slug}-security.md`
 2. Верни ТОЛЬКО краткое summary (5-10 строк):
    - Verdict: BLOCK / PASS WITH NOTES / PASS
    - Количество замечаний по severity (CRITICAL: N, HIGH: N, MEDIUM: N, LOW: N)

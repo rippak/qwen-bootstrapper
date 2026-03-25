@@ -1,10 +1,10 @@
 # cc-bootstrapper
 
-Генератор системы автоматизации Claude Code. Запускаешь `/bootstrap` в любом проекте — получаешь полную `.claude/` структуру: агенты, пайплайны, скиллы, memory, hooks, settings. Дальше работаешь через `/pipeline`.
+Генератор системы автоматизации Qwen Code. Запускаешь `/bootstrap` в любом проекте — получаешь полную `.qwen/` структуру: агенты, пайплайны, скиллы, memory, hooks, settings. Дальше работаешь через `/pipeline`.
 
 ## Требования
 
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code)
+- [Qwen Code CLI](https://qwen.ai/qwencode)
 - Bash 4+
 - `jq`
 - macOS, Linux или Windows (WSL)
@@ -12,22 +12,22 @@
 ## Установка
 
 ```bash
-cp commands/bootstrap.md ~/.claude/commands/
-cp prompts/meta-prompt-bootstrap.md ~/.claude/prompts/
-cp -r prompts/bootstrap ~/.claude/prompts/
+mkdir ~/.qwen/commands && cp commands/bootstrap.md ~/.qwen/commands/
+mkdir ~/.qwen/prompts && cp prompts/meta-prompt-bootstrap.md ~/.qwen/prompts/
+cp -r prompts/bootstrap ~/.qwen/prompts/
 ```
 
 ## Запуск
 
 ```bash
 cd /path/to/your-project
-claude
+qwen
 ```
 ```
 > /bootstrap
 ```
 
-Автоопределение: нет `.claude/` → полная генерация, есть → валидация + auto-fix.
+Автоопределение: нет `.qwen/` → полная генерация, есть → валидация + auto-fix.
 
 Поддерживаемые стеки: PHP, Node.js/TypeScript, Python, Go, Rust, Java, C#, Ruby. Мульти-язычные проекты — набор агентов для каждого языка.
 
@@ -39,7 +39,7 @@ claude
 
 ## Routing
 
-CLAUDE.md содержит ЖЁСТКОЕ ПРАВИЛО: любой запрос связанный с кодом автоматически маршрутизируется через `/pipeline`. Свободная форма — только для вопросов и обсуждений.
+QWEN.md содержит ЖЁСТКОЕ ПРАВИЛО: любой запрос связанный с кодом автоматически маршрутизируется через `/pipeline`. Свободная форма — только для вопросов и обсуждений.
 
 ```
 /pipeline review          → ревью кода
@@ -164,7 +164,7 @@ Reviewers  → читают код (git diff), пишут отчёты в output
 
 ## GitLab MCP (опционально)
 
-Если настроен при bootstrap — `.mcp.json` с GitLab MCP server + агент `gitlab-manager` + пайплайн `gitlab`:
+Если настроен при bootstrap — файл `settings.json` содержит настройки GitLab MCP server + агент `gitlab-manager` + пайплайн `gitlab`:
 - Управление Issues, MR, Pipelines, Wiki
 - Роутер автоматически направляет запросы типа "создай MR", "задача #42"
 
@@ -172,13 +172,13 @@ Reviewers  → читают код (git diff), пишут отчёты в output
 
 Вся структура — твоя после генерации.
 
-**Агент:** создай `.claude/agents/{name}.md` по структуре существующих, добавь в CLAUDE.md, подключи в пайплайн.
+**Агент:** создай `.qwen/agents/{name}.md` по структуре существующих, добавь в QWEN.md, подключи в пайплайн.
 
-**Скилл:** `mkdir -p .claude/skills/{name}`, создай `SKILL.md`. Для invocable — frontmatter `user-invocable: true`.
+**Скилл:** `mkdir -p .qwen/skills/{name}`, создай `SKILL.md`. Для invocable — frontmatter `user-invocable: true`.
 
-**Пайплайн:** создай `.claude/pipelines/{name}.md` (минимум 2 фазы с Task()), добавь keywords в `skills/pipeline/SKILL.md`, добавь в CLAUDE.md.
+**Пайплайн:** создай `.qwen/pipelines/{name}.md` (минимум 2 фазы с Task()), добавь keywords в `skills/pipeline/SKILL.md`, добавь в QWEN.md.
 
-**Hook:** создай `.claude/scripts/hooks/{name}.sh`, `chmod +x`, добавь в `settings.json`.
+**Hook:** создай `.qwen/scripts/hooks/{name}.sh`, `chmod +x`, добавь в `settings.json`.
 
 ## Версионирование
 

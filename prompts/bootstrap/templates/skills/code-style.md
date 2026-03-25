@@ -50,6 +50,6 @@ version: "5.4.2"
 {BAD_EXAMPLE}
 ```
 
-## Правила из CLAUDE.md
+## Правила из QWEN.md
 
-{EXTRACTED_CLAUDE_RULES}
+{EXTRACTED_QWEN_RULES}

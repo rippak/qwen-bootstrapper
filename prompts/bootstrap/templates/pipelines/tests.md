@@ -4,15 +4,15 @@
 ## Вход
 - Файлы / модули для покрытия тестами
 - Структурированный контекст из роутера: type, affected_modules
-- `.claude/memory/facts.md`
+- `.qwen/memory/facts.md`
 
 ## Phase 1: ANALYZE
 
-1. Прочитай `.claude/memory/facts.md` → секции: Stack, Key Paths
+1. Прочитай `.qwen/memory/facts.md` → секции: Stack, Key Paths
 2. Определи целевые файлы и их public API
 3. Проверь существующие тесты — не дублировать
 4. Составь план тестирования: класс → методы → сценарии
-5. Запиши план в `.claude/output/plans/{task-slug}.md`
+5. Запиши план в `.qwen/output/plans/{task-slug}.md`
 
 ### Вывод
 ```
@@ -31,8 +31,8 @@ AskUserQuestion:
 
 ## Phase 2: GENERATE
 
-Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
-  Вход: прочитай `.claude/output/plans/{task-slug}.md` + целевые файлы + `.claude/skills/testing/SKILL.md`
+Task(.qwen/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
+  Вход: прочитай `.qwen/output/plans/{task-slug}.md` + целевые файлы + `.qwen/skills/testing/SKILL.md`
   Выход: файлы тестов
   Верни: summary (файлы тестов, количество кейсов)
 
@@ -50,9 +50,9 @@ Task(.claude/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
 
 ## Phase 4: REVIEW
 
-Task(.claude/agents/{lang}-reviewer-logic.md, subagent_type: "general-purpose"):
+Task(.qwen/agents/{lang}-reviewer-logic.md, subagent_type: "general-purpose"):
   Вход: файлы тестов (git diff)
-  Выход: запиши в `.claude/output/reviews/{task-slug}-tests.md`
+  Выход: запиши в `.qwen/output/reviews/{task-slug}-tests.md`
   Верни: summary (verdict, качество тестов)
 
 ### Обработка результатов

@@ -12,12 +12,12 @@ description: "Технический анализ задачи — читает 
 PLAN MODE, READ-ONLY (не пишет код, но активно читает).
 
 ## Контекст (читай сам)
-- `.claude/memory/facts.md` → Stack, Key Paths, Known Issues
-- `.claude/memory/decisions/` → архитектурные решения
-- `.claude/memory/patterns.md` → паттерны кодовой базы
-- `.claude/skills/architecture/SKILL.md` → архитектурные правила
-- `.claude/skills/code-style/SKILL.md` → стилевые конвенции
-- `.claude/database/schema.sql` → схема БД (если есть)
+- `.qwen/memory/facts.md` → Stack, Key Paths, Known Issues
+- `.qwen/memory/decisions/` → архитектурные решения
+- `.qwen/memory/patterns.md` → паттерны кодовой базы
+- `.qwen/skills/architecture/SKILL.md` → архитектурные правила
+- `.qwen/skills/code-style/SKILL.md` → стилевые конвенции
+- `.qwen/database/schema.sql` → схема БД (если есть)
 - `{SOURCE_DIR}` → исходный код (затронутые модули)
 - `docker-compose.yml` / CI конфиги → инфраструктурный контекст
 
@@ -46,7 +46,7 @@ PLAN MODE, READ-ONLY (не пишет код, но активно читает).
 6. Сформируй ТЗ с привязкой к конкретным файлам и модулям
 
 ## Выход
-`.claude/output/plans/{task-slug}-spec.md`
+`.qwen/output/plans/{task-slug}-spec.md`
 
 ## Формат ТЗ
 - Цель (что делаем и зачем)
