@@ -6,9 +6,9 @@ argument-hint: "[описание задачи]"
 version: "5.4.2"
 ---
 
-> **CRITICAL: Имя директории `skills/pipeline/` и файл frontmatter КОПИРОВАТЬ AS-IS.
-> НЕ переименовывать в routing/, router/, или другое.
-> Имя директории = имя slash-команды `/pipeline`. Изменение = система НЕ РАБОТАЕТ.**
+> **CRITICAL: Имя файла `commands/pipeline.md` и файл frontmatter КОПИРОВАТЬ AS-IS.
+> НЕ переименовывать в routing, router, или другое.
+> Имя файла = имя slash-команды `/pipeline`. Изменение = система НЕ РАБОТАЕТ.**
 
 # Pipeline — Единый роутер
 

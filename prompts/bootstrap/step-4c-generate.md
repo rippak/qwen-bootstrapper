@@ -337,7 +337,7 @@ chmod +x .qwen/scripts/verify-bootstrap.sh
 "enableAllProjectMcpServers": true
 ```
 
-**skills/pipeline/SKILL.md** — добавить в Keyword-таблицу:
+**commands/pipeline.md** — добавить в Keyword-таблицу:
 ```
 | gitlab, MR, merge request, issue, задача #N | `gitlab.md` |
 ```

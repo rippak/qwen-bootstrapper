@@ -49,7 +49,6 @@
 ## Cleanup легаси (автоматически, без вопросов)
 
 В режиме `validate` выполняется автоматически:
-- `skills/routing/` существует → переименовать в `skills/pipeline/`, обновить содержимое → `[FIX] routing/ → pipeline/`
 - `QWEN.md` содержит "Auto-Pipeline Rule" → заменить на ЖЁСТКОЕ ПРАВИЛО → `[FIX] QWEN.md`
 - Агенты без ссылок на skills → добавить ссылки → `[FIX] {path}`
 - Устаревшие файлы (`state/session.md`, `state/task-log.md`) → предупредить → `[WARN] Устаревший: {path}`

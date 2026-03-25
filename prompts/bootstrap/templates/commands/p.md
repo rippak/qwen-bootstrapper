@@ -6,7 +6,7 @@ argument-hint: "[описание задачи]"
 version: "5.4.2"
 ---
 
-> **CRITICAL: Имя директории `skills/p/` КОПИРОВАТЬ AS-IS.**
+> **CRITICAL: Имя файла `commands/p.md` КОПИРОВАТЬ AS-IS.**
 
 # Skill: Pipeline Alias
 

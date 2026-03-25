@@ -176,6 +176,8 @@ Reviewers  → читают код (git diff), пишут отчёты в output
 
 **Скилл:** `mkdir -p .qwen/skills/{name}`, создай `SKILL.md`. Для invocable — frontmatter `user-invocable: true`.
 
+**Команда:** `mkdir -p .qwen/commands`, создай `{name}.md`. Для invocable — frontmatter `user-invocable: true`.
+
 **Пайплайн:** создай `.qwen/pipelines/{name}.md` (минимум 2 фазы с Task()), добавь keywords в `skills/pipeline/SKILL.md`, добавь в QWEN.md.
 
 **Hook:** создай `.qwen/scripts/hooks/{name}.sh`, `chmod +x`, добавь в `settings.json`.

@@ -84,15 +84,15 @@
 
 ## 3.2 Скиллы
 
-| # | Скилл | Директория |
-|---|-------|------------|
-| 1 | Code Style | `skills/code-style/` |
+| # | Скилл | Директория             |
+|---|-------|------------------------|
+| 1 | Code Style | `skills/code-style/`   |
 | 2 | Architecture | `skills/architecture/` |
-| 3 | Database | `skills/database/` |
-| 4 | Testing | `skills/testing/` |
-| 5 | Memory | `skills/memory/` |
-| 6 | Pipeline | `skills/pipeline/` |
-| 7 | Pipeline Alias | `skills/p/` |
+| 3 | Database | `skills/database/`     |
+| 4 | Testing | `skills/testing/`      |
+| 5 | Memory | `skills/memory/`       |
+| 6 | Pipeline | `commands/pipeline.md` |
+| 7 | Pipeline Alias | `commands/p.md`        |
 
 ### 3.2.1 Кастомные скиллы
 

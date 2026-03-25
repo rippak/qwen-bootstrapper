@@ -43,22 +43,21 @@
 → Нет frontmatter → добавить из шаблона → `[FIX] {path}: добавлен frontmatter`
 → Нет `version` или version < шаблона → перегенерировать из шаблона → `[REGEN] {path}: version outdated`
 
-#### skills/pipeline/SKILL.md (CRITICAL)
-- Файл расположен в `skills/pipeline/` (НЕ `skills/routing/`)
+#### commands/pipeline.md (CRITICAL)
+- Файл расположен в `commands/pipeline.md`
 - Содержит frontmatter с `user-invocable: true`
 - Содержит `name: pipeline` в frontmatter
 - Содержит `version: N` в frontmatter — сравнить с шаблоном (`templates/skills/pipeline.md`)
 - Содержит таблицу Intent → Триггеры
 - Содержит Шаг 4 — Диспатч с ссылкой на `.qwen/pipelines/`
-→ `skills/routing/` → переместить в `skills/pipeline/` → `[FIX] routing/ → pipeline/`
 → Нет frontmatter → добавить → `[FIX] добавлен frontmatter`
-→ Нет таблицы → перегенерировать из шаблона → `[REGEN] pipeline/SKILL.md`
-→ Нет `version` или version < шаблона → перегенерировать из шаблона → `[REGEN] pipeline/SKILL.md: version outdated`
+→ Нет таблицы → перегенерировать из шаблона → `[REGEN] pipeline.md`
+→ Нет `version` или version < шаблона → перегенерировать из шаблона → `[REGEN] pipeline.md: version outdated`
 
-#### skills/p/SKILL.md
+#### commands/p.md
 - Содержит frontmatter с `user-invocable: true`
 - Ссылается на `/pipeline`
-→ Нет → создать из шаблона → `[NEW] skills/p/SKILL.md`
+→ Нет → создать из шаблона → `[NEW] commands/p.md`
 
 ---
 
@@ -70,9 +69,11 @@
   `templates/skills/architecture.md` → `.qwen/skills/architecture/SKILL.md`
   `templates/skills/database.md` → `.qwen/skills/database/SKILL.md`
   `templates/skills/testing.md` → `.qwen/skills/testing/SKILL.md`
-  `templates/skills/pipeline.md` → `.qwen/skills/pipeline/SKILL.md`
-  `templates/skills/p.md` → `.qwen/skills/p/SKILL.md`
   `templates/skills/memory.md` → `.qwen/skills/memory/SKILL.md`
+
+Для каждой команды прочитай шаблон из `templates/commands/` → подставь переменные → запиши в `.qwen/commands/{name}.md`:
+  `templates/commands/pipeline.md` → `.qwen/commands/pipeline.md`
+  `templates/commands/p.md` → `.qwen/commands/p.md`
 
 ### 4.3.1 Кастомные скиллы
 

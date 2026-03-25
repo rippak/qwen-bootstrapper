@@ -26,12 +26,12 @@ for f in "$PROJECT_DIR"/.qwen/skills/*/SKILL.md; do
 done
 
 echo ""
-echo "=== Pipeline Skill ==="
-[ -d "$PROJECT_DIR/.qwen/skills/pipeline" ] && echo "[OK] skills/pipeline/" || { echo "[ERR] skills/pipeline/ NOT FOUND"; EXIT_CODE=1; }
+echo "=== Pipeline Command ==="
+[ -f "$PROJECT_DIR/.qwen/commands/pipeline.md" ] && echo "[OK] commands/pipeline" || { echo "[ERR] commands/pipeline NOT FOUND"; EXIT_CODE=1; }
 [ -d "$PROJECT_DIR/.qwen/skills/routing" ] && echo "[ERR] skills/routing/ — устаревшее имя, переименуй в pipeline/"
-head -5 "$PROJECT_DIR/.qwen/skills/pipeline/SKILL.md" 2>/dev/null | grep -q "user-invocable: true" && echo "[OK] frontmatter" || { echo "[ERR] Missing user-invocable: true in pipeline/SKILL.md"; EXIT_CODE=1; }
+head -5 "$PROJECT_DIR/.qwen/commands/pipeline.md" 2>/dev/null | grep -q "user-invocable: true" && echo "[OK] frontmatter" || { echo "[ERR] Missing user-invocable: true in commands/pipeline.md"; EXIT_CODE=1; }
 
-[ -d "$PROJECT_DIR/.qwen/skills/p" ] && echo "[OK] skills/p/" || echo "[WARN] skills/p/ not found"
+[ -f "$PROJECT_DIR/.qwen/commands/p.md" ] && echo "[OK] commands/p" || echo "[WARN] commands/p not found"
 
 grep -q "/pipeline" "$PROJECT_DIR/QWEN.md" 2>/dev/null && echo "[OK] /pipeline reference in QWEN.md" || { echo "[ERR] QWEN.md missing /pipeline reference"; EXIT_CODE=1; }
 
