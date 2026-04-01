@@ -27,7 +27,7 @@ Task(step-2-qwen-md.md):
   Выход → QWEN.md создан/валидирован
 
 Task(step-3-plan.md):
-  Выход → реестры (agents, skills, pipelines, MCP)
+  Выход → реестры (agents, skills, commands, pipelines, MCP)
 
 ### Параллельная генерация (4/4b/4c)
 

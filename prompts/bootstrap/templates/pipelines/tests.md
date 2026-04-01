@@ -1,4 +1,4 @@
-<!-- version: 5.4.2 -->
+<!-- version: 6.0.0 -->
 # Pipeline: Tests
 
 ## Вход

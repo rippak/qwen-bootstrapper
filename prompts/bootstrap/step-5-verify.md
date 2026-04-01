@@ -25,7 +25,7 @@ bash .qwen/scripts/verify-bootstrap.sh
 
 ```bash
 HASHES="{}"
-for f in .qwen/agents/*.md .qwen/skills/*/SKILL.md .qwen/pipelines/*.md .qwen/scripts/hooks/*.sh .qwen/scripts/verify-bootstrap.sh; do
+for f in .qwen/agents/*.md .qwen/commands/*.md .qwen/skills/*/SKILL.md .qwen/pipelines/*.md .qwen/scripts/hooks/*.sh .qwen/scripts/verify-bootstrap.sh; do
     [ -f "$f" ] || continue
     REL=$(echo "$f" | sed 's|^.qwen/||')
     HASH=$(sha256sum "$f" | cut -d' ' -f1)

@@ -91,8 +91,6 @@
 | 3 | Database | `skills/database/`     |
 | 4 | Testing | `skills/testing/`      |
 | 5 | Memory | `skills/memory/`       |
-| 6 | Pipeline | `commands/pipeline.md` |
-| 7 | Pipeline Alias | `commands/p.md`        |
 
 ### 3.2.1 Кастомные скиллы
 
@@ -129,11 +127,18 @@
 
 Сохрани в CUSTOM_SKILLS.
 
-## 3.3 Пайплайны
+## 3.3 Команды
+
+| # | Команда        | Директория             |
+|---|----------------|------------------------|
+| 1 | Pipeline       | `commands/pipeline.md` |
+| 2 | Pipeline Alias | `commands/p.md`        |
+
+## 3.4 Пайплайны
 
 Всегда 8 пайплайнов: new-code, fix-code, review, tests, api-docs, qa-docs, full-feature, hotfix.
 
-### 3.3.1 Кастомные пайплайны
+### 3.4.1 Кастомные пайплайны
 
 **Шаг 1.** Используй AskUserQuestion:
 - question: "Добавить кастомные пайплайны?"
@@ -176,7 +181,7 @@
 
 Сохрани в CUSTOM_PIPELINES.
 
-### 3.3.2 Adaptive Teams
+### 3.4.2 Adaptive Teams
 
 **Шаг 1.** Используй AskUserQuestion:
 - question: "Включить adaptive team mode для пайплайнов? Если доступен Opus 4.6 — ревью и разработка будут параллельными через Teams API. Иначе — автоматический fallback на последовательный режим."
@@ -190,9 +195,9 @@
 
 Затронутые пайплайны при `ADAPTIVE_TEAMS=true`: new-code, review, full-feature (через наследование new-code).
 
-## 3.4 MCP-интеграции
+## 3.5 MCP-интеграции
 
-### 3.4.1 GitLab MCP
+### 3.5.1 GitLab MCP
 
 **Шаг 1.** Используй AskUserQuestion:
 - question: "Настроить интеграцию с GitLab через MCP? Позволяет управлять issues, MR, pipelines, wiki прямо из QWEN Code"

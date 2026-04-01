@@ -101,6 +101,7 @@ echo ""
 echo "=== Summary ==="
 echo "Agents: $(ls -1 "$PROJECT_DIR"/.qwen/agents/*.md 2>/dev/null | wc -l)"
 echo "Skills: $(ls -1d "$PROJECT_DIR"/.qwen/skills/*/SKILL.md 2>/dev/null | wc -l)"
+echo "Commands: $(ls -1d "$PROJECT_DIR"/.qwen/commands/*.md 2>/dev/null | wc -l)"
 echo "Pipelines: $(ls -1 "$PROJECT_DIR"/.qwen/pipelines/*.md 2>/dev/null | wc -l)"
 echo "Hooks: $(ls -1 "$PROJECT_DIR"/.qwen/scripts/hooks/*.sh 2>/dev/null | wc -l)"
 

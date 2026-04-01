@@ -54,8 +54,3 @@
 "mcp__gitlab__get_merge_request_diffs",
 "mcp__gitlab__my_issues"
 ```
-
-И добавь в корень settings.json:
-```json
-"enableAllProjectMcpServers": true
-```

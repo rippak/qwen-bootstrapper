@@ -332,11 +332,6 @@ chmod +x .qwen/scripts/verify-bootstrap.sh
 "mcp__gitlab__my_issues"
 ```
 
-И добавить в корень settings.json:
-```json
-"enableAllProjectMcpServers": true
-```
-
 **commands/pipeline.md** — добавить в Keyword-таблицу:
 ```
 | gitlab, MR, merge request, issue, задача #N | `gitlab.md` |
