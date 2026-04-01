@@ -58,7 +58,7 @@
 ## 4.1 Директории
 
 ```bash
-mkdir -p .qwen/{agents,skills/{code-style,architecture,database,testing,memory,pipeline,p},pipelines,scripts/hooks,memory/{decisions,decisions/archive,sessions,sessions/archive},output/{contracts,qa,plans,reviews},input/{tasks,plans},database}
+mkdir -p .qwen/{agents,skills/{code-style,architecture,database,testing,memory},commnds,pipelines,scripts/hooks,memory/{decisions,decisions/archive,sessions,sessions/archive},output/{contracts,qa,plans,reviews},input/{tasks,plans},database}
 touch .qwen/memory/decisions/.gitkeep .qwen/memory/decisions/archive/.gitkeep
 ```
 
