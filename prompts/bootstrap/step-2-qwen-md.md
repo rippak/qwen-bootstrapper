@@ -134,9 +134,14 @@
 | Database | `database/` | миграции, типы данных, индексы |
 | Testing | `testing/` | тест-паттерны |
 | Memory | `memory/` | трёхуровневая память: facts, decisions, archive |
-| Pipeline | `pipeline/` | `/pipeline` — роутер пайплайнов |
-| Pipeline Alias | `p/` | `/p` — быстрый вызов /pipeline |
 {CUSTOM_SKILLS_ROWS}
+
+
+## Commands
+| Команда        | Файл | Назначение |
+|----------------|------|------------|
+| Pipeline       | `pipeline/` | `/pipeline` — роутер пайплайнов |
+| Pipeline Alias | `p/` | `/p` — быстрый вызов /pipeline |
 
 ## Pipelines
 

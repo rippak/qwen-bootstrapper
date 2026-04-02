@@ -3,7 +3,7 @@ name: pipeline
 description: "Роутер — классифицирует задачу и запускает нужный pipeline"
 user-invocable: true
 argument-hint: "[описание задачи]"
-version: "6.0.0"
+version: "6.1.0"
 ---
 
 > **CRITICAL: Имя файла `commands/pipeline.md` и файл frontmatter КОПИРОВАТЬ AS-IS.
@@ -115,7 +115,16 @@ AskUserQuestion:
 Для REVIEW / API-DOCS / QA-DOCS — без дополнительных вопросов.
 
 ### Шаг 4 — Диспатч
-Прочитай `.qwen/pipelines/{type}.md` и выполни ВСЕ фазы.
+
+{type_lower = to_lowercase({TYPE})}
+
+Task(.qwen/pipelines/{type_lower}.md, subagent_type: "general-purpose"):
+  Вход: $ARGUMENTS
+  Контекст: {результаты Шага 3.6 — тип проблемы, модули, или "без контекста"}
+  Skip Analysis: {SKIP_ANALYSIS|false}
+
+> **Важно:** Пайплайн `.qwen/pipelines/{type_lower}.md` содержит собственные фазы
+> с Task() для вызова агентов. Данный Task() передаёт управление пайплайну.
 
 {если ADAPTIVE_TEAMS:}
 > **Adaptive Teams:** Пайплайны new-code, review, full-feature автоматически определяют

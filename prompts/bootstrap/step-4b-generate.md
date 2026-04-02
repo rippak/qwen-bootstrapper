@@ -39,8 +39,7 @@
 - Начинается с YAML frontmatter (`---` блок) с полями `name`, `description`, `version`
 - `description` — ОДНА строка (критичное ограничение Qwen Code)
 - `version` — совпадает с версией шаблона (см. «Версионирование шаблонов»)
-- Для pipeline и p: `user-invocable: true`
-- Для остальных скиллов: `user-invocable: false`
+- `user-invocable: false` для всех скиллов
 → Нет frontmatter → добавить из шаблона → `[FIX] {path}: добавлен frontmatter`
 → Нет `version` или version < шаблона → перегенерировать из шаблона → `[REGEN] {path}: version outdated`
 
@@ -50,16 +49,19 @@
 - Файл расположен в `commands/pipeline.md`
 - Содержит frontmatter с `user-invocable: true`
 - Содержит `name: pipeline` в frontmatter
-- Содержит `version: N` в frontmatter — сравнить с шаблоном (`templates/skills/pipeline.md`)
+- Содержит `version: N` в frontmatter — сравнить с шаблоном (`templates/commands/pipeline.md`)
 - Содержит таблицу Intent → Триггеры
-- Содержит Шаг 4 — Диспатч с ссылкой на `.qwen/pipelines/`
+- Содержит Шаг 4 — Диспатч с Task() для вызова пайплайна
 → Нет frontmatter → добавить → `[FIX] добавлен frontmatter`
 → Нет таблицы → перегенерировать из шаблона → `[REGEN] pipeline.md`
 → Нет `version` или version < шаблона → перегенерировать из шаблона → `[REGEN] pipeline.md: version outdated`
+→ Нет Task() в Шаге 4 → перегенерировать → `[REGEN] pipeline.md: missing Task() dispatch`
 
 #### commands/p.md
 - Содержит frontmatter с `user-invocable: true`
-- Ссылается на `/pipeline`
+- Содержит Task() для вызова `.qwen/commands/pipeline.md`
+→ Нет frontmatter → добавить → `[FIX] добавлен frontmatter`
+→ Нет Task() → перегенерировать → `[REGEN] p.md: missing Task()`
 → Нет → создать из шаблона → `[NEW] commands/p.md`
 
 ---

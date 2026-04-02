@@ -181,7 +181,7 @@ Reviewers  → читают код (git diff), пишут отчёты в output
 
 **Команда:** `mkdir -p .qwen/commands`, создай `{name}.md`. Для invocable — frontmatter `user-invocable: true`.
 
-**Пайплайн:** создай `.qwen/pipelines/{name}.md` (минимум 2 фазы с Task()), добавь keywords в `skills/pipeline/SKILL.md`, добавь в QWEN.md.
+**Пайплайн:** создай `.qwen/pipelines/{name}.md` (минимум 2 фазы с Task()), добавь Task() в `commands/pipeline.md` для диспатча, добавь в QWEN.md.
 
 **Hook:** создай `.qwen/scripts/hooks/{name}.sh`, `chmod +x`, добавь в `settings.json`.
 
@@ -189,6 +189,7 @@ Reviewers  → читают код (git diff), пишут отчёты в output
 
 | Версия | Что нового                                                                                                                 |
 |--------|----------------------------------------------------------------------------------------------------------------------------|
+| v6.1.0 | Изменение запуска команд /p и /pipeline                                                                                    |
 | v6.0.0 | Правка шаблонов под Qwen Code                                                                                              |
 | v5.4.2 | AskUserQuestion во всём интерактиве, обновление Teams API (natural language вместо TeamCreate/Spawn)                       |
 | v5.4.1 | Версионирование шаблонов — version в frontmatter скиллов и HTML-комментарий в пайплайнах, авто-REGEN при устаревшей версии |

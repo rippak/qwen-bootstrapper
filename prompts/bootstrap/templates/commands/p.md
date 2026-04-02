@@ -3,16 +3,22 @@ name: p
 description: "Алиас для /pipeline"
 user-invocable: true
 argument-hint: "[описание задачи]"
-version: "6.0.0"
+version: "6.1.0"
 ---
 
 > **CRITICAL: Имя файла `commands/p.md` КОПИРОВАТЬ AS-IS.**
 
-# Skill: Pipeline Alias
+# Command: Pipeline Alias
 
-Вызови `/pipeline` с переданными аргументами.
+Быстрый вызов `/pipeline`.
 
-Примеры:
+## Выполнение
+
+Task(.qwen/commands/pipeline.md, subagent_type: "invocable"):
+  Вход: $ARGUMENTS
+
+## Примеры
+
 - `/p review` = `/pipeline review`
 - `/p срочно исправить баг` = `/pipeline срочно исправить баг`
 - `/p` = `/pipeline` (без аргументов)
