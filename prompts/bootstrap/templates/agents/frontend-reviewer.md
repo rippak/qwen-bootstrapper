@@ -8,6 +8,9 @@ description: "Ревью frontend-кода и компонентов"
 ## Роль
 Ревью frontend-кода. READ-ONLY.
 
+## Анти-лень
+{Прочитай templates/includes/anti-laziness.md и вставь содержимое AS-IS — без изменений, без сокращений}
+
 ## Контекст (читай сам)
 - `.qwen/memory/facts.md` → секции: Stack, Key Paths, Active Decisions (НЕ весь файл)
 - `.qwen/memory/decisions/` — архитектурные решения

@@ -11,6 +11,9 @@ description: "Технический анализ задачи — читает 
 ## Режим
 PLAN MODE, READ-ONLY (не пишет код, но активно читает).
 
+## Анти-лень
+{Прочитай templates/includes/anti-laziness.md и вставь содержимое AS-IS — без изменений, без сокращений}
+
 ## Контекст (читай сам)
 - `.qwen/memory/facts.md` → Stack, Key Paths, Known Issues
 - `.qwen/memory/decisions/` → архитектурные решения

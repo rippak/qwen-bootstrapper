@@ -1,4 +1,4 @@
-<!-- version: 6.2.2 -->
+<!-- version: 6.2.3 -->
 # Pipeline: New Code
 
 ## ЖЁСТКИЕ ПРАВИЛА
@@ -38,7 +38,14 @@ AskUserQuestion:
 → "Подтвердить": передай ТЗ в Phase 2
 
 ---
-**CHECKPOINT:** Phase 1 завершена. Файл `.qwen/output/plans/{task-slug}-spec.md` записан. Переход к Phase 2.
+**CHECKPOINT — Phase 1 → Phase 2**
+Прежде чем перейти к Phase 2, подтверди выполнение:
+- [ ] `.qwen/output/plans/{task-slug}-spec.md` записан с полным ТЗ
+- [ ] Пользователь подтвердил ТЗ через AskUserQuestion
+- [ ] Краткое ТЗ показано пользователю
+
+Если хотя бы один пункт НЕ выполнен — заверши Phase 1 ПЕРЕД переходом.
+НЕ ПЕРЕХОДИ к Phase 2 пока не проставлены все чекбоксы.
 
 ## Phase 2: ARCHITECTURE
 
@@ -60,7 +67,14 @@ AskUserQuestion:
 → "Уточнить": скорректируй план → повтори AskUserQuestion
 
 ---
-**CHECKPOINT:** Phase 2 завершена. Файл `.qwen/output/plans/{task-slug}.md` записан. Переход к Phase 3.
+**CHECKPOINT — Phase 2 → Phase 3**
+Прежде чем перейти к Phase 3, подтверди выполнение:
+- [ ] `.qwen/output/plans/{task-slug}.md` записан с полным архитектурным планом
+- [ ] Пользователь подтвердил план через AskUserQuestion
+- [ ] План показан пользователю (модули, ключевые решения)
+
+Если хотя бы один пункт НЕ выполнен — заверши Phase 2 ПЕРЕД переходом.
+НЕ ПЕРЕХОДИ к Phase 3 пока не проставлены все чекбоксы.
 
 ## Phase 3: DATABASE
 
@@ -78,7 +92,14 @@ Task(.qwen/agents/db-architect.md, subagent_type: "general-purpose"):
 Если БД не затронута — `[SKIP] Phase 3: не затрагивает БД`.
 
 ---
-**CHECKPOINT:** Phase 3 завершена (или пропущена обоснованно). Переход к Phase 4.
+**CHECKPOINT — Phase 3 → Phase 4**
+Прежде чем перейти к Phase 4, подтверди выполнение:
+- [ ] Миграции записаны ИЛИ фаза обоснованно пропущена (БД не затронута)
+- [ ] Команда миграции выполнена ИЛИ пропущена
+- [ ] SummaryPhase 3) возвращено (таблицы, миграции)
+
+Если хотя бы один пункт НЕ выполнен — заверши Phase 3 ПЕРЕД переходом.
+НЕ ПЕРЕХОДИ к Phase 4 пока не проставлены все чекбоксы.
 
 ## Phase 4: CODE
 
@@ -92,7 +113,14 @@ Task(.qwen/agents/{lang}-developer.md, subagent_type: "general-purpose"):
 ```
 
 ---
-**CHECKPOINT:** Phase 4 завершена. Код написан, синтаксис проверен. Переход к Phase 5.
+**CHECKPOINT — Phase 4 → Phase 5**
+Прежде чем перейти к Phase 5, подтверди выполнение:
+- [ ] Код записан в файлы (НЕ в контекст разговора, а РЕАЛЬНЫЕ файлы)
+- [ ] Синтаксис проверен через `{SYNTAX_CHECK_CMD}`
+- [ ] SummaryPhase 4) возвращено (созданные файлы, зависимости)
+
+Если хотя бы один пункт НЕ выполнен — заверши Phase 4 ПЕРЕД переходом.
+НЕ ПЕРЕХОДИ к Phase 5 пока не проставлены все чекбоксы.
 
 ## Phase 5: TESTS
 
@@ -108,7 +136,14 @@ Task(.qwen/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
 Если тесты fail — исправить (максимум 2 итерации).
 
 ---
-**CHECKPOINT:** Phase 5 завершена. Тесты написаны и прошли. Переход к Phase 6.
+**CHECKPOINT — Phase 5 → Phase 6**
+Прежде чем перейти к Phase 6, подтверди выполнение:
+- [ ] Тесты записаны в файлы (НЕ заглушки, РЕАЛЬНЫЕ тесты)
+- [ ] Тесты прошли (pass/total указан)
+- [ ] SummaryPhase 5) возвращено (тесты, покрытие)
+
+Если хотя бы один пункт НЕ выполнен — заверши Phase 5 ПЕРЕД переходом.
+НЕ ПЕРЕХОДИ к Phase 6 пока не проставлены все чекбоксы.
 
 ## Phase 6: REVIEW
 
@@ -152,7 +187,15 @@ Task(.qwen/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose")
 - **PASS** → продолжить
 
 ---
-**CHECKPOINT:** Phase 6 завершена. Оба reviewer отработали. Переход к Phase 6.5.
+**CHECKPOINT — Phase 6 → Phase 6.5**
+Прежде чем перейти к Phase 6.5, подтверди выполнение:
+- [ ] ОБА reviewer вызваны (logic И security) — НЕ один, НЕ «только один»
+- [ ] Отчёты сохранены: `.qwen/output/reviews/{task-slug}-logic.md` и `-security.md`
+- [ ] Verdict получен от каждого reviewer
+- [ ] BLOCK-замечания исправлены (если были)
+
+Если хотя бы один пункт НЕ выполнен — заверши Phase 6 ПЕРЕД переходом.
+НЕ ПЕРЕХОДИ к Phase 6.5 пока не проставлены все чекбоксы.
 
 ## Phase 6.5: CAPTURE
 
