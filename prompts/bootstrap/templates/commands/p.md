@@ -3,7 +3,7 @@ name: p
 description: "Алиас для /pipeline"
 user-invocable: true
 argument-hint: "[описание задачи]"
-version: "6.2.1"
+version: "6.2.2"
 ---
 
 > **CRITICAL: Имя файла `commands/p.md` КОПИРОВАТЬ AS-IS.**

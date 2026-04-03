@@ -15,6 +15,9 @@ description: "Ревью логики {LANG}-кода"
 - `.qwen/skills/code-style/SKILL.md`
 - `.qwen/skills/architecture/SKILL.md`
 
+## Правила работы с инструментами
+{Прочитай templates/includes/tool-usage-rules.md и вставь содержимое AS-IS — без изменений, без сокращений}
+
 ## Вход (получаешь от пайплайна)
 - task-slug: идентификатор задачи
 - Путь к входным данным (план/файлы предыдущей фазы)

@@ -1,4 +1,4 @@
-<!-- version: 6.2.1 -->
+<!-- version: 6.2.2 -->
 # Pipeline: Fix Code
 
 ## ЖЁСТКИЕ ПРАВИЛА
