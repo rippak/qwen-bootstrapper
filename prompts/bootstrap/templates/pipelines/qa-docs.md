@@ -1,5 +1,10 @@
-<!-- version: 6.1.0 -->
+<!-- version: 6.2.1 -->
 # Pipeline: QA Docs
+
+## ЖЁСТКИЕ ПРАВИЛА
+
+1. **НЕ ПРОПУСКАЙ фазы.** INPUT → CHECKLIST → POSTMAN → SAVE — каждая отдельно.
+2. **Если нет контракта API — скажи пользователю** и предложи сначала запустить API Docs.
 
 ## Вход
 - Модуль / фича для QA-документации
@@ -10,7 +15,10 @@
 1. Прочитай `.qwen/memory/facts.md`
 2. Найди контракт API: `.qwen/output/contracts/{module}.md`
 3. Изучи бизнес-логику модуля (сервисы, валидация, edge cases)
-4. Если контракта нет — сначала запусти pipeline API Docs
+4. Если контракта нет — сообщи пользователю и предложи запустить pipeline API Docs
+
+---
+**CHECKPOINT:** Phase 1 завершена. Контракт найден. Переход к Phase 2.
 
 ## Phase 2: CHECKLIST
 
@@ -25,6 +33,9 @@ Task(.qwen/agents/qa-engineer.md, subagent_type: "general-purpose"):
 - Граничные случаи
 - Интеграционные проверки (зависимости между модулями)
 
+---
+**CHECKPOINT:** Phase 2 завершена. Чеклист написан. Переход к Phase 3.
+
 ## Phase 3: POSTMAN
 
 Task(.qwen/agents/qa-engineer.md, subagent_type: "general-purpose"):
@@ -36,6 +47,9 @@ Task(.qwen/agents/qa-engineer.md, subagent_type: "general-purpose"):
 - Pre-request scripts (auth, переменные)
 - Tests (assertions на status, body, headers)
 - Environment variables
+
+---
+**CHECKPOINT:** Phase 3 завершена. Коллекция создана. Переход к Phase 4.
 
 ## Phase 4: SAVE
 

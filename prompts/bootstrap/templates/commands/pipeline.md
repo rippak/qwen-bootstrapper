@@ -3,7 +3,7 @@ name: pipeline
 description: "Роутер — классифицирует задачу и запускает нужный pipeline"
 user-invocable: true
 argument-hint: "[описание задачи]"
-version: "6.1.0"
+version: "6.2.1"
 ---
 
 > **CRITICAL: Имя файла `commands/pipeline.md` и файл frontmatter КОПИРОВАТЬ AS-IS.

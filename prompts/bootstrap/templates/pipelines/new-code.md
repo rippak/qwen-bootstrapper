@@ -1,5 +1,13 @@
-<!-- version: 6.1.0 -->
+<!-- version: 6.2.1 -->
 # Pipeline: New Code
+
+## ЖЁСТКИЕ ПРАВИЛА
+
+1. **НЕ ПРОПУСКАЙ фазы.** Проходи по ВСЕМ фазам от ANALYSIS до CAPTURE. Даже если задача кажется элементарной — используй сокращённый формат, но выполни каждую фазу.
+2. **НЕ ОБЪЕДИНЯЙ фазы.** Каждая фаза — отдельный Task(). Не создай код в фазе DATABASE, не пиши тесты в фазе CODE.
+3. **Используй правильных агентов.** Для DATABASE — db-architect, для CODE — {lang}-developer, для TESTS — {lang}-test-developer, для REVIEW — оба reviewer-а.
+4. **REVIEW не пропускается.** Даже для одной строки кода — вызови минимум одного reviewer.
+5. **CAPTURE обязательна.** Обнови memory перед финальным отчётом.
 
 ## Вход
 - Описание задачи от пользователя
@@ -29,6 +37,9 @@ AskUserQuestion:
 → "Уточнить": уточни и перегенерируй ТЗ → повтори AskUserQuestion
 → "Подтвердить": передай ТЗ в Phase 2
 
+---
+**CHECKPOINT:** Phase 1 завершена. Файл `.qwen/output/plans/{task-slug}-spec.md` записан. Переход к Phase 2.
+
 ## Phase 2: ARCHITECTURE
 
 Task(.qwen/agents/{lang}-architect.md, subagent_type: "general-purpose", mode: "plan"):
@@ -48,37 +59,46 @@ AskUserQuestion:
 
 → "Уточнить": скорректируй план → повтори AskUserQuestion
 
+---
+**CHECKPOINT:** Phase 2 завершена. Файл `.qwen/output/plans/{task-slug}.md` записан. Переход к Phase 3.
+
 ## Phase 3: DATABASE
 
 Если задача затрагивает БД:
 
 Task(.qwen/agents/db-architect.md, subagent_type: "general-purpose"):
   Вход: прочитай `.qwen/output/plans/{task-slug}.md` + `.qwen/skills/database/SKILL.md` + `.qwen/database/schema.sql`
-  Выход: миграции, обновлённая схема
+  Выход: миграции, обновлённая схема (ТОЛЬКО миграции — НЕ пиши код приложения)
   Верни: summary (таблицы, миграции)
 
 ```bash
 {MIGRATE_CMD}
 ```
 
-Если БД не затронута — `[SKIP]`.
+Если БД не затронута — `[SKIP] Phase 3: не затрагивает БД`.
+
+---
+**CHECKPOINT:** Phase 3 завершена (или пропущена обоснованно). Переход к Phase 4.
 
 ## Phase 4: CODE
 
 Task(.qwen/agents/{lang}-developer.md, subagent_type: "general-purpose"):
   Вход: прочитай `.qwen/output/plans/{task-slug}.md` + `.qwen/skills/code-style/SKILL.md`
-  Выход: файлы кода
+  Выход: файлы кода (НЕ тесты — тесты пишутся в Phase 5)
   Верни: summary (созданные файлы, зависимости)
 
 ```bash
 {SYNTAX_CHECK_CMD}
 ```
 
+---
+**CHECKPOINT:** Phase 4 завершена. Код написан, синтаксис проверен. Переход к Phase 5.
+
 ## Phase 5: TESTS
 
 Task(.qwen/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
   Вход: реализованные файлы (из git diff или summary Phase 4) + `.qwen/skills/testing/SKILL.md`
-  Выход: файлы тестов
+  Выход: файлы тестов (НЕ код приложения — только тесты)
   Верни: summary (тесты, покрытие)
 
 ```bash
@@ -87,7 +107,12 @@ Task(.qwen/agents/{lang}-test-developer.md, subagent_type: "general-purpose"):
 
 Если тесты fail — исправить (максимум 2 итерации).
 
+---
+**CHECKPOINT:** Phase 5 завершена. Тесты написаны и прошли. Переход к Phase 6.
+
 ## Phase 6: REVIEW
+
+**ЗАПРЕЩЕНО ПРОПУСКАТЬ.** Вызови ОБА reviewer-а.
 
 ### Режим TEAM (если EXECUTION_MODE=team)
 
@@ -126,7 +151,12 @@ Task(.qwen/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose")
 - **PASS WITH WARNINGS** → исправить WARN, продолжить
 - **PASS** → продолжить
 
+---
+**CHECKPOINT:** Phase 6 завершена. Оба reviewer отработали. Переход к Phase 6.5.
+
 ## Phase 6.5: CAPTURE
+
+**ОБЯЗАТЕЛЬНА.** Выполни перед FINALIZATION:
 
 1. Обнови `.qwen/memory/facts.md` по секциям:
    - "## Stack" → ЗАМЕНИТЬ секцию целиком (только если стек изменился)
@@ -145,6 +175,7 @@ Task(.qwen/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose")
 Создано файлов: {N}
 Тесты: {pass}/{total}
 Review: {verdict}
+Memory updated: facts.md + decisions/ + patterns.md
 ```
 
 ## Матрица ошибок

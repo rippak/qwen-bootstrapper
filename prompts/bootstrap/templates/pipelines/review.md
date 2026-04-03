@@ -1,5 +1,11 @@
-<!-- version: 6.1.0 -->
+<!-- version: 6.2.1 -->
 # Pipeline: Review
+
+## ЖЁСТКИЕ ПРАВИЛА
+
+1. **Оба reviewer обязательны.** Вызывай И {lang}-reviewer-logic, И {lang}-reviewer-security. Без исключений.
+2. **Не пропускай Phase 2: REPORT.** Объедини результаты перед выводом пользователю.
+3. **CAPTURE через фиксацию issues.** Запиши recurring issues в issues.md.
 
 ## Вход
 - Файлы для ревью (diff или список путей)
@@ -41,6 +47,11 @@ Task(.qwen/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose")
   Выход: запиши в `.qwen/output/reviews/{task-slug}-security.md`
   Верни: summary (verdict, замечания по severity)
 
+**НЕ ПЕРЕХОДИ К Phase 2,** пока оба reviewer не завершены.
+
+---
+**CHECKPOINT:** Phase 1 завершена. Оба reviewer отработали. Переход к Phase 2.
+
 ## Phase 2: REPORT
 
 ### Объединение результатов
@@ -58,6 +69,11 @@ Task(.qwen/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose")
 - **PASS WITH WARNINGS** — только WARN/INFO → рекомендовано исправить
 - **PASS** — замечаний нет или только INFO
 
+Покажи пользователю сводную таблицу и verdict.
+
+---
+**CHECKPOINT:** Phase 2 завершена. Отчёт показан. Переход к Phase 3.
+
 ## Phase 3: CAPTURE
 
 1. Обнови `.qwen/memory/facts.md` по секциям:
@@ -72,4 +88,5 @@ Task(.qwen/agents/{lang}-reviewer-security.md, subagent_type: "general-purpose")
 Logic: {verdict} ({N} замечаний)
 Security: {verdict} ({N} замечаний)
 Overall: {verdict}
+Memory updated: issues.md + patterns.md
 ```

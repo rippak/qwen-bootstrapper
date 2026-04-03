@@ -20,9 +20,9 @@
 ## Версионирование шаблонов
 
 Все шаблоны (скиллы, команды и пайплайны) содержат версию бутстрапера:
-- **Скиллы**: поле `version` в YAML frontmatter (например `version: "5.4.2"`)
-- **Команды**: поле `version` в YAML frontmatter (например `version: "5.4.2"`)
-- **Пайплайны**: HTML-комментарий в первой строке (например `<!-- version: 5.4.2 -->`)
+- **Скиллы**: поле `version` в YAML frontmatter (например `version: "6.2.1"`)
+- **Команды**: поле `version` в YAML frontmatter (например `version: "6.2.1"`)
+- **Пайплайны**: HTML-комментарий в первой строке (например `<!-- version: 6.2.1 -->`)
 
 При валидации (`validate` режим):
 - Извлеки версию из локального файла и из шаблона
@@ -137,7 +137,32 @@ user-invocable: false
 - Если неоднозначно — используй `PRIMARY_LANG`
 - Для задач, затрагивающих несколько языков — фазы CODE, TESTS, REVIEW повторяются для каждого затронутого языка с соответствующими агентами
 
-Для каждого пайплайна прочитай шаблон из `templates/pipelines/` → подставь переменные → запиши в `.qwen/pipelines/{name}.md`:
+#### Подстановка переменных в пайплайны (CRITICAL)
+
+Шаблоны пайплайнов содержат placeholder'ы `{MIGRATE_CMD}`, `{TEST_CMD}`, `{SYNTAX_CHECK_CMD}`. При генерации **ЗАМЕНИ их на реальные команды** из анализа шага 1:
+
+**Для КАЖДОГО `{lang}` из `LANGS` определи:**
+
+| Placeholder | Значение | Пример (PHP/Laravel) |
+|-------------|----------|---------------------|
+| `{MIGRATE_CMD}` | Команда запуска миграций | `docker compose exec public-app php artisan migrate` или `php artisan migrate` |
+| `{TEST_CMD}` | Команда запуска тестов | `docker compose exec public-app php artisan test` или `php artisan test` |
+| `{SYNTAX_CHECK_CMD}` | Команда проверки синтаксиса | `php -l courts/app/{file}.php` |
+
+**Правила подстановки:**
+1. Если `CONTAINER=docker` или `CONTAINER=podman` — используй `{CONTAINER_CMD} exec ...` (определи путь к compose/docker-compose и имя сервиса из анализа проекта)
+2. Если `CONTAINER=none` — используй прямые команды (`php artisan`, `npm test`, etc.)
+3. **НЕ ОСТАВЛЯЙ** placeholder'ы в сгенерированных файлах — это ошибка генерации
+4. Для `{lang}` используй `TEST_CMD_{lang}`, `LINT_CMD_{lang}` из шага 1
+
+**Где заменяются:**
+- `pipelines/new-code.md`: Phase 3 `{MIGRATE_CMD}`, Phase 4 `{SYNTAX_CHECK_CMD}`, Phase 5 `{TEST_CMD}`
+- `pipelines/fix-code.md`: Phase 2 `{SYNTAX_CHECK_CMD}`, Phase 3 `{TEST_CMD}`
+- `pipelines/tests.md`: Phase 3 `{TEST_CMD}`, Phase 3 `{SYNTAX_CHECK_CMD}`
+
+---
+
+Для каждого пайплайна прочитай шаблон из `templates/pipelines/` → подставь переменные (включая {MIGRATE_CMD}, {TEST_CMD}, {SYNTAX_CHECK_CMD}) → запиши в `.qwen/pipelines/{name}.md`:
 
   `templates/pipelines/new-code.md` → `.qwen/pipelines/new-code.md`
   `templates/pipelines/fix-code.md` → `.qwen/pipelines/fix-code.md`
